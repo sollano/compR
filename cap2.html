@@ -218,7 +218,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">CompR - Inventário Florestal</h1>
-<h3 class="subtitle"><em>Capítulo 1 - Cubagem</em></h3>
+<h3 class="subtitle"><em>Capítulo 2 - Cubagem</em></h3>
 <h4 class="author"><em>Sollano Rabelo Braga</em></h4>
 <h4 class="author"><em>Marcio Leles Romarco de Oliveira</em></h4>
 <h4 class="author"><em>Eric Bastos Gorgens</em></h4>
@@ -231,6 +231,13 @@ div.tocify {
 <p>O pacote dplyr será utilizado neste script. Caso ele não esteja instalado na máquina ou esteja desatualizado, utilize a função install.packages para instalá-lo, como na linha de comando abaixo:</p>
 <pre class="r"><code>#install.packages(&quot;dplyr&quot;, dependencies = T)</code></pre>
 <p>Com o pacote instalado, basta rodar o comando library para carregá-lo na sua seção atual. Isto deve ser feito sempre que se iniciar uma nova seção, ou seja, sempre que se abrir o R ou reiniciá-lo.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<div id="calculo-do-volume-por-secao" class="section level1">
+<h1>Cálculo do volume por seção</h1>
+<p>Existem diversos métodos de cálculo de volume de árvores cubadas. Aqui serão abordados dois dos mais utilizados. Utilizando eles como base, é possível fazer modificações para fazer o cálculo para os outros métodos, caso o usuário deseje.</p>
+<div id="metodo-de-smalian" class="section level2">
+<h2>Método de Smalian</h2>
+<p>O volume p <span class="math display">\[ V_{secao} = \frac{AS_{i} + AS_{i+1}}{2} . L \]</span></p>
 <pre class="r"><code>library(dplyr)</code></pre>
 <p>Os dados utilizados neste capítulo estão disponíveis no site github, e podem ser baixados e carregados no R utilizando a função read.csv2. Vamos realizar o download desses dados direto pelo R por meio da função, e salvar em um objeto chamado dados_sma:</p>
 <pre class="r"><code>dados_sma &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_sma.csv&quot;)</code></pre>
@@ -382,176 +389,6 @@ e_casca
 </tr>
 </tbody>
 </table>
-<p>É important</p>
-<pre class="r"><code>str(dados_sma)</code></pre>
-<pre><code>## 'data.frame':    3393 obs. of  6 variables:
-##  $ ARVORE : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ DAP    : num  12.4 12.4 12.4 12.4 12.4 ...
-##  $ HT     : num  22.1 22.1 22.1 22.1 22.1 22.1 22.1 22.1 22.1 22.1 ...
-##  $ hi     : num  0.1 0.5 1 1.5 2 4 6 8 10 12 ...
-##  $ di_cc  : num  13.1 12.6 12.4 12.3 11.8 ...
-##  $ e_casca: num  6 6 5 5 4 4 3 3 3 3 ...</code></pre>
-<p>Após</p>
-<div id="calculo-do-volume-por-secao" class="section level1">
-<h1>Cálculo do volume por seção</h1>
-<p>Existem diversos métodos de cálculo de volume de árvores cubadas. Aqui serão abordados dois dos mais utilizados. Utilizando eles como base, é possível fazer modificações para fazer o cálculo para os outros métodos, caso o usuário deseje.</p>
-<div id="metodo-de-smalian" class="section level2">
-<h2>Método de Smalian</h2>
-<p>O volume p <span class="math display">\[ V_{secao} = \frac{AS_{i} + AS_{i+1}}{2} . L \]</span> Antes de</p>
-<pre class="r"><code>head(dados_sma)</code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align:right;">
-ARVORE
-</th>
-<th style="text-align:right;">
-DAP
-</th>
-<th style="text-align:right;">
-HT
-</th>
-<th style="text-align:right;">
-hi
-</th>
-<th style="text-align:right;">
-di_cc
-</th>
-<th style="text-align:right;">
-e_casca
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-0.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-13.05
-</td>
-<td style="text-align:right;width: 2cm; ">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-0.5
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.57
-</td>
-<td style="text-align:right;width: 2cm; ">
-6
-</td>
-</tr>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-1.0
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-1.5
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.25
-</td>
-<td style="text-align:right;width: 2cm; ">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-2.0
-</td>
-<td style="text-align:right;width: 2cm; ">
-11.78
-</td>
-<td style="text-align:right;width: 2cm; ">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;width: 2cm; ">
-1
-</td>
-<td style="text-align:right;width: 2cm; ">
-12.41
-</td>
-<td style="text-align:right;width: 2cm; ">
-22.1
-</td>
-<td style="text-align:right;width: 2cm; ">
-4.0
-</td>
-<td style="text-align:right;width: 2cm; ">
-11.30
-</td>
-<td style="text-align:right;width: 2cm; ">
-4
-</td>
-</tr>
-</tbody>
-</table>
-<div id="section" class="section level4">
-<h4></h4>
-<pre class="r"><code>library(dplyr)
-
-dados_vol_secao &lt;- dados_sma %&gt;% 
-  mutate( # função para adicionar novas variáveis
-    AS_CC = (di_cc^2 * pi) / 40000) # Cálculo da AS com casca</code></pre>
 <pre class="r"><code>head(dados_vol_secao)</code></pre>
 <table>
 <thead>
@@ -1747,105 +1584,6 @@ VSC
 </tr>
 </tbody>
 </table>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="right">ARVORE</th>
-<th align="right">DAP</th>
-<th align="right">HT</th>
-<th align="right">hi</th>
-<th align="right">di_cc</th>
-<th align="right">e_casca</th>
-<th align="right">AS_CC</th>
-<th align="right">VCC</th>
-<th align="right">di_sc</th>
-<th align="right">AS_SC</th>
-<th align="right">VSC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">0.1</td>
-<td align="right">13.05071</td>
-<td align="right">6</td>
-<td align="right">0.0133770</td>
-<td align="right">0.0051586</td>
-<td align="right">11.85071</td>
-<td align="right">0.0110301</td>
-<td align="right">0.0042378</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">0.5</td>
-<td align="right">12.57324</td>
-<td align="right">6</td>
-<td align="right">0.0124161</td>
-<td align="right">0.0061300</td>
-<td align="right">11.37324</td>
-<td align="right">0.0101592</td>
-<td align="right">0.0050979</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">1.0</td>
-<td align="right">12.41409</td>
-<td align="right">5</td>
-<td align="right">0.0121037</td>
-<td align="right">0.0059748</td>
-<td align="right">11.41409</td>
-<td align="right">0.0102323</td>
-<td align="right">0.0050453</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">1.5</td>
-<td align="right">12.25493</td>
-<td align="right">5</td>
-<td align="right">0.0117954</td>
-<td align="right">0.0056724</td>
-<td align="right">11.25493</td>
-<td align="right">0.0099489</td>
-<td align="right">0.0048533</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">2.0</td>
-<td align="right">11.77747</td>
-<td align="right">4</td>
-<td align="right">0.0108942</td>
-<td align="right">0.0209229</td>
-<td align="right">10.97747</td>
-<td align="right">0.0094644</td>
-<td align="right">0.0181234</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">4.0</td>
-<td align="right">11.30000</td>
-<td align="right">4</td>
-<td align="right">0.0100288</td>
-<td align="right">0.0186947</td>
-<td align="right">10.50000</td>
-<td align="right">0.0086590</td>
-<td align="right">0.0163633</td>
-</tr>
-</tbody>
-</table>
-</div>
 <pre class="r"><code>dados_vol_secao &lt;- dados_sma %&gt;% # definição do df
   group_by(ARVORE) %&gt;% # grupo
   mutate( # função para adicionar novas variáveis
@@ -2107,6 +1845,1118 @@ VSC
 </tr>
 </tbody>
 </table>
+</div>
+<div id="metodo-de-huber" class="section level2">
+<h2>Método de Huber</h2>
+<p><span class="math display">\[ V_{secao} = AS_{1/2} . L \]</span></p>
+<pre class="r"><code>library(dplyr)
+
+dados_hub &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_hub.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_hub)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+TORA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+hi
+</th>
+<th style="text-align:right;">
+di_cc
+</th>
+<th style="text-align:right;">
+e_casca
+</th>
+<th style="text-align:right;">
+comp_secao
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+3.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+5.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_secao)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+TORA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+hi
+</th>
+<th style="text-align:right;">
+di_cc
+</th>
+<th style="text-align:right;">
+e_casca
+</th>
+<th style="text-align:right;">
+comp_secao
+</th>
+<th style="text-align:right;">
+AS_CC
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0269
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0269
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0241
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0241
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0227
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0227
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+3.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0214
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0214
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+5.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_secao)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+TORA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+hi
+</th>
+<th style="text-align:right;">
+di_cc
+</th>
+<th style="text-align:right;">
+e_casca
+</th>
+<th style="text-align:right;">
+comp_secao
+</th>
+<th style="text-align:right;">
+di_sc
+</th>
+<th style="text-align:right;">
+AS_CC
+</th>
+<th style="text-align:right;">
+AS_SC
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0269
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0235
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0269
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0235
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0241
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0209
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0241
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0209
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0227
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0227
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+3.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0214
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0189
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0214
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0189
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15.2
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0181
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0181
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+21
+</td>
+<td style="text-align:right;width: 2cm; ">
+5.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15.2
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0181
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0201
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0181
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="calculo-do-volume-por-arvore" class="section level1">
+<h1>Cálculo do volume por árvore</h1>
+<pre class="r"><code>dados_vol_secao &lt;-  read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_vol_secao_sma.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_vol_secao)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+hi
+</th>
+<th style="text-align:right;">
+di_cc
+</th>
+<th style="text-align:right;">
+e_casca
+</th>
+<th style="text-align:right;">
+di_sc
+</th>
+<th style="text-align:right;">
+AS_CC
+</th>
+<th style="text-align:right;">
+AS_SC
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.8507
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0134
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0052
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0042
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.57
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.3732
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0124
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0061
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0051
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.4141
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0121
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0060
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0050
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.25
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.2549
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0118
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0057
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0049
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.78
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+10.9775
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0109
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0209
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0181
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+11.30
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+10.5000
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0100
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.01
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0187
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0164
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[ V_{arvore} = V_{secao1} + V_{secao2} + ... V_n \]</span></p>
+<pre class="r"><code>dados_vol_arv &lt;- dados_vol_secao  %&gt;% # define df utilizado
+  group_by(ARVORE)                %&gt;% # define grupo
+  summarize(                          # totaliza os dados
+    DAP   = mean(DAP),                # Media de DAP
+    HT    = mean(HT) ,                # media de HT
+    VCC   = sum(VCC) ,                # Soma de volume com casca
+    VSC   = sum(VSC))                 # Soma de volume sem casca      </code></pre>
+<pre class="r"><code>head(dados_vol_arv)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+</tr>
+</tbody>
+</table>
 <div class="kable-table">
 <table>
 <thead>
@@ -2114,12 +2964,6 @@ VSC
 <th align="right">ARVORE</th>
 <th align="right">DAP</th>
 <th align="right">HT</th>
-<th align="right">hi</th>
-<th align="right">di_cc</th>
-<th align="right">e_casca</th>
-<th align="right">di_sc</th>
-<th align="right">AS_CC</th>
-<th align="right">AS_SC</th>
 <th align="right">VCC</th>
 <th align="right">VSC</th>
 </tr>
@@ -2129,96 +2973,1483 @@ VSC
 <td align="right">1</td>
 <td align="right">12.41409</td>
 <td align="right">22.1</td>
-<td align="right">0.1</td>
+<td align="right">0.1306796</td>
+<td align="right">0.1134201</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
 <td align="right">13.05071</td>
-<td align="right">6</td>
-<td align="right">11.85071</td>
-<td align="right">0.0133770</td>
-<td align="right">0.0110301</td>
-<td align="right">0.0051586</td>
-<td align="right">0.0042378</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">0.5</td>
-<td align="right">12.57324</td>
-<td align="right">6</td>
-<td align="right">11.37324</td>
-<td align="right">0.0124161</td>
-<td align="right">0.0101592</td>
-<td align="right">0.0061300</td>
-<td align="right">0.0050979</td>
+<td align="right">22.3</td>
+<td align="right">0.1453301</td>
+<td align="right">0.1262906</td>
 </tr>
 <tr class="odd">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">1.0</td>
-<td align="right">12.41409</td>
-<td align="right">5</td>
-<td align="right">11.41409</td>
-<td align="right">0.0121037</td>
-<td align="right">0.0102323</td>
-<td align="right">0.0059748</td>
-<td align="right">0.0050453</td>
+<td align="right">3</td>
+<td align="right">13.20986</td>
+<td align="right">20.0</td>
+<td align="right">0.1257959</td>
+<td align="right">0.1078330</td>
 </tr>
 <tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">1.5</td>
-<td align="right">12.25493</td>
-<td align="right">5</td>
-<td align="right">11.25493</td>
-<td align="right">0.0117954</td>
-<td align="right">0.0099489</td>
-<td align="right">0.0056724</td>
-<td align="right">0.0048533</td>
+<td align="right">4</td>
+<td align="right">13.20986</td>
+<td align="right">19.4</td>
+<td align="right">0.1385562</td>
+<td align="right">0.1231479</td>
 </tr>
 <tr class="odd">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">2.0</td>
-<td align="right">11.77747</td>
-<td align="right">4</td>
-<td align="right">10.97747</td>
-<td align="right">0.0108942</td>
-<td align="right">0.0094644</td>
-<td align="right">0.0209229</td>
-<td align="right">0.0181234</td>
+<td align="right">5</td>
+<td align="right">13.36902</td>
+<td align="right">23.7</td>
+<td align="right">0.1564261</td>
+<td align="right">0.1333964</td>
 </tr>
 <tr class="even">
-<td align="right">1</td>
-<td align="right">12.41409</td>
-<td align="right">22.1</td>
-<td align="right">4.0</td>
-<td align="right">11.30000</td>
-<td align="right">4</td>
-<td align="right">10.50000</td>
-<td align="right">0.0100288</td>
-<td align="right">0.0086590</td>
-<td align="right">0.0186947</td>
-<td align="right">0.0163633</td>
+<td align="right">6</td>
+<td align="right">13.52817</td>
+<td align="right">21.5</td>
+<td align="right">0.1390332</td>
+<td align="right">0.1239648</td>
 </tr>
 </tbody>
 </table>
 </div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+</tr>
+</tbody>
+</table>
+<div id="fator-de-forma-medio-e-ajuste-de-modelos-voumetricos" class="section level2">
+<h2>Fator de forma médio e ajuste de modelos voumétricos</h2>
+<pre class="r"><code>dados_vol_arv &lt;-  read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_vol_arv.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_vol_arv)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+</tr>
+</tbody>
+</table>
+<div id="fator-de-forma" class="section level3">
+<h3>Fator de forma</h3>
+<pre class="r"><code>ff_med &lt;- dados_vol_arv %&gt;% 
+  summarise(
+    FFCC = mean(VCC/(pi * DAP^2 / 40000 * HT)),  
+    FFSC = mean(VSC/(pi * DAP^2 / 40000 * HT)) )</code></pre>
+<pre class="r"><code>ff_med</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+FFCC
+</th>
+<th style="text-align:right;">
+FFSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+0.4684
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.4116
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="section-1" class="section level4">
-<h4></h4>
+<div id="modelos-volumetricos" class="section level3">
+<h3>Modelos volumétricos</h3>
+<p><span class="math display">\[ Ln(Vcc) = \beta_0 + \beta_1*Ln(dap) + \beta_2*Ln(Ht) + \varepsilon_i \]</span></p>
+<pre class="r"><code>summary(lm(log(VCC) ~  log(DAP) + log(HT), data =dados_vol_arv))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(VCC) ~ log(DAP) + log(HT), data = dados_vol_arv)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.146174 -0.022224  0.004922  0.029721  0.129528 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -9.59586    0.06149 -156.07   &lt;2e-16 ***
+## log(DAP)     1.88937    0.03386   55.80   &lt;2e-16 ***
+## log(HT)      0.90716    0.04387   20.68   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.04856 on 194 degrees of freedom
+## Multiple R-squared:  0.9967, Adjusted R-squared:  0.9966 
+## F-statistic: 2.899e+04 on 2 and 194 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>tabcoef_vcc &lt;- dados_vol_arv %&gt;% # selecao do df
+  do(Reg = lm(log(VCC) ~  log(DAP) + log(HT), data =.)) </code></pre>
+<pre class="r"><code>tabcoef_vcc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Reg
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+&lt;s3: lm&gt;
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vcc &lt;- dados_vol_arv %&gt;% # selecao do df
+  do(Reg = lm(log(VCC) ~  log(DAP) + log(HT), data =.)) %&gt;% 
+  rowwise %&gt;% 
+  mutate(b0=coef(Reg)[1], # a variavel mod
+         b1=coef(Reg)[2], # possui os coefs na ordem, 
+         b2=coef(Reg)[3]) # por isso eles sao extraidos com []</code></pre>
+<pre class="r"><code>tabcoef_vcc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Reg
+</th>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 2cm; ">
+&lt;s3: lm&gt;
+</td>
+<td style="text-align:right;width: 2cm; ">
+-9.595863
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.889372
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.907163
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vcc &lt;- dados_vol_arv %&gt;% 
+  do(Reg = lm(log(VCC) ~  log(DAP) + log(HT), data =.)) %&gt;% 
+  rowwise %&gt;% 
+  mutate(b0=coef(Reg)[1], 
+         b1=coef(Reg)[2], 
+         b2=coef(Reg)[3],
+         Rsqr=summary(Reg)[[8]],
+         Rsqr_adj=summary(Reg)[[9]], 
+         Std.Error=summary(Reg)[[6]]) %&gt;% 
+  select(-Reg) </code></pre>
+<pre class="r"><code>tabcoef_vcc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+<th style="text-align:right;">
+Rsqr
+</th>
+<th style="text-align:right;">
+Rsqr_adj
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+-9.595863
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.889372
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.907163
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.049
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vsc &lt;- dados_vol_arv %&gt;% 
+  do(Reg = lm(log(VSC) ~  log(DAP) + log(HT), data =.)) %&gt;% 
+  rowwise %&gt;% 
+  mutate(b0=coef(Reg)[1], 
+         b1=coef(Reg)[2], 
+         b2=coef(Reg)[3],
+         Rsqr=summary(Reg)[[8]],
+         Rsqr_adj=summary(Reg)[[9]], 
+         Std.Error=summary(Reg)[[6]]) %&gt;% 
+  select(-Reg) </code></pre>
+<pre class="r"><code>tabcoef_vsc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+<th style="text-align:right;">
+Rsqr
+</th>
+<th style="text-align:right;">
+Rsqr_adj
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+-9.808975
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.918007
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.908154
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.996
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.996
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.053
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="determinacao-do-melhor-estimador" class="section level3">
+<h3>Determinação do melhor estimador</h3>
+<pre class="r"><code>ff_med &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/ff_med.csv&quot;)</code></pre>
+<pre class="r"><code>ff_med</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+FFCC
+</th>
+<th style="text-align:right;">
+FFSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+0.4684
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.4116
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vcc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+<th style="text-align:right;">
+Rsqr
+</th>
+<th style="text-align:right;">
+Rsqr_adj
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+-9.595863
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.889372
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.907163
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.049
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_arv)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_arv_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+VCC_FF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1253
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1397
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1284
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1245
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1558
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1447
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_arv_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+VCC_FF
+</th>
+<th style="text-align:right;">
+VCC_MOD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1253
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1315
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1397
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1457
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1284
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1351
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1245
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1314
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1558
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1612
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1447
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1509
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[ Resíduo (\%) = \frac{V_{i}est - V_{i}obs}{V_{i}obs} . 100 \]</span></p>
+<pre class="r"><code>dados_vol_arv_est  &lt;- dados_vol_arv_est  %&gt;% 
+  mutate(
+    RES_FF  = ((VCC_FF  - VCC)/VCC)*100,
+    RES_MOD = ((VCC_MOD - VCC)/VCC)*100 )</code></pre>
+<pre class="r"><code>head(dados_vol_arv_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+VCC_FF
+</th>
+<th style="text-align:right;">
+VCC_MOD
+</th>
+<th style="text-align:right;">
+RES_FF
+</th>
+<th style="text-align:right;">
+RES_MOD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1253
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1315
+</td>
+<td style="text-align:right;width: 2cm; ">
+-4.12
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.64
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1397
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1457
+</td>
+<td style="text-align:right;width: 2cm; ">
+-3.86
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.28
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1284
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1351
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.06
+</td>
+<td style="text-align:right;width: 2cm; ">
+7.38
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1245
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1314
+</td>
+<td style="text-align:right;width: 2cm; ">
+-10.12
+</td>
+<td style="text-align:right;width: 2cm; ">
+-5.16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1558
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1612
+</td>
+<td style="text-align:right;width: 2cm; ">
+-0.38
+</td>
+<td style="text-align:right;width: 2cm; ">
+3.04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1447
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1509
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.11
+</td>
+<td style="text-align:right;width: 2cm; ">
+8.52
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_vol_arv_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+ARVORE
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+VCC_FF
+</th>
+<th style="text-align:right;">
+VCC_MOD
+</th>
+<th style="text-align:right;">
+RES_FF
+</th>
+<th style="text-align:right;">
+RES_MOD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.41
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1307
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1134
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1253
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1315
+</td>
+<td style="text-align:right;width: 2cm; ">
+-4.12
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.64
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.05
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1453
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1263
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1397
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1457
+</td>
+<td style="text-align:right;width: 2cm; ">
+-3.86
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.28
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1258
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1078
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1284
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1351
+</td>
+<td style="text-align:right;width: 2cm; ">
+2.06
+</td>
+<td style="text-align:right;width: 2cm; ">
+7.38
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.21
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1386
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1231
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1245
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1314
+</td>
+<td style="text-align:right;width: 2cm; ">
+-10.12
+</td>
+<td style="text-align:right;width: 2cm; ">
+-5.16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.37
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1564
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1334
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1558
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1612
+</td>
+<td style="text-align:right;width: 2cm; ">
+-0.38
+</td>
+<td style="text-align:right;width: 2cm; ">
+3.04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1390
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1240
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1447
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1509
+</td>
+<td style="text-align:right;width: 2cm; ">
+4.11
+</td>
+<td style="text-align:right;width: 2cm; ">
+8.52
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(dados_vol_arv_est, aes(VCC, RES_FF)) + 
+  geom_point() +
+  scale_y_continuous(limits = c(-40,40))</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAABDlBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrYzMzM6AAA6OgA6Ojo6OmY6ZpA6ZrY6kJA6kNtNTU1NTW5NTY5Nbo5NbqtNjshmAABmOgBmOjpmZmZmZpBmkJBmkLZmkNtmtttmtv9uTU1ubo5ujqtujshuq+SOTU2Obk2Obm6Oq6uOyOSOyP+QOgCQZjqQZmaQkLaQttuQ2/+rbk2rjm6r5P+2ZgC2Zjq2kJC2tra2ttu22/+2///Ijk3Ijm7IyKvI5P/I///bkDrbkGbbtmbbtpDbtrbbttvb27bb29vb2//b///kq27kyKvk///r6+v/tmb/yI7/25D/27b/5Kv/5Mj/5OT//7b//8j//9v//+T///8lh9qKAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO2d/YPc1nWeV4kTOXJTD62POK4bs4qYDzluQllpmtCVlThtY0YUHbIiuf//P9Kd2Znd+QBw7rm4uAfP2ff5hVzsAHjwzsW7mMHd2atrIYQQVVxFCwghBBUVqBBCVKICFUKISlSgQghRiQpUCCEqUYEKIUQlKlAhhKhEBSqEEJWoQIUQohIVqBBCVKICFUKISlSgQghRiQpUCCEq6VagL4YYWbwuAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YlyrQV48/+mb3n3dfPN5sPv1KBdoRQo4ERYJjtIBN7hgXKtB3Tze3BfrmyWbLj36tAu0HIUeCIsExWsAmd4wLFejzzb5An20++ur69aFOVaBdIORIUCQ4RgvY5I5xmQJ99XhfoK8e76493zx59EsVaDcIORIUCY7RAja5Y1ykQG9ewP/V7Xugzzcf75Y833ymAu0GIUeCIsExWsAmd4yLFOizzcf7m0jPNp/vlrzcF6kKtAeEHAmKBMdoAZvcMS5RoC9vXr7fFui7p/uX7nc35a/fv6XFfoQQYk20KNDdG54qUCHEQ6NFgT7bvt95UaBnE5lGLoerr6T7AXAk5EhQJDhGC9jkjrF9gT7f3X8fvQJVgS4PIUeCIsExWsAmd4zNC/TV411nqkADIeRIUCQ4RgvY5I6xeYE+39xx86pdd+EjIORIUCQ4RgvY5I5x4QI9zP/UPNCeEHIkKBIcowVscsfYvED37F+z6zeRIiDkSFAkOEYL2OSOceECffd086F+F743hBwJigTHaAGb3DEuXKDXr/VpTP0h5EhQJDhGC9jkjnHpAr1+/cVNf376zfn3R2Sqj6MfAEdCjgRFgmO0gE3uGJcqUIsRmerj6AfAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHWNUgQohRDZ0BWoCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4JiqOPVDfajFGMTVKD9ADgSciQoRjpeXRU1qGJsggq0HwBHQo4ExUDHq6uyBlWMTVCB9gPgSMiRoBjneHVV2KCKsQkq0H4AHAk5EhRVoC3IPRpVoF4AjoQcCYoq0BbkHo0qUC8AR0KOBEUVaAtyj0YVqBeAIyFHgqJuIrUg92hUgXoBOBJyJChqGlMLco9GFagXgCMhR4KiJtK3IPdoVIF6ATgSciQoEhyjBWxyx6gC9QJwJORIUCQ4RgvY5I5RBeoF4EjIkaBIcIwWsMkdowrUC8CRkCNBkeAYLWCTO0YVqBeAIyFHgiLBMVrAJneMSxTov//lZvPo069uv3j3xePN5vCFCrQLhBwJigTHaAGb3DEuUKC/2ux49MvtF2+e7L740a9VoP0g5EhQJDhGC9jkjrF9gb7cPPrr6+vXT29L89nmo6+2X3z0jQq0G4QcCYoEx2gBm9wxNi/Qd083n2//vbn0vPn31eNdjb55cns9qgLtAiFHgiLBMVrAJneMzQv0zZP9y/Vnm8+ur59vPt598Xz7hQq0E4QcCYoEx2gBm9wxNi/QO3YF+uz2cvTmdf3HKtBuEHIkKBIcowVscse4WIHuXrW/e7p/6f7q8eFN0PdvabYfIYRYCe0KdPfiXQUqhHg4NCvQl7tpTEcFejaRaeRyuPpKuh8AR0KOBEWCY7SATe4YFyrQl48fbd/8HLgCVYEuDyFHgiLBMVrAJneMyxTo8/00ehVoCIQcCYoEx2gBm9wxLlKgv9ocpn3qLnwEhBwJigTHaAGb3DEuUKDvnm0+PLzheZj/qXmgPSHkSFAkOEYL2OSOcYECfXb0e5v6TaQICDkSFAmO/XdZ9rdG7skdY/sCfX78e+/vnm4+1O/C94aQI0GR4Nh9j4V/7e6e3DE2L9D9xy9t2b7t+VqfxtQfQo4ERYJj7x2W/r3le3LH2LxAX25OCvT69Rc3//v0m/OHjchUH0c/AI6EHAmKBMfO+7u6cjdo7hibF2ghIzLVx9EPgCMhR4IiwbHz/lSg52uqQJ0AHAk5EhQJjp33pwI9X1MF6gTgSMiRoEhw7Lw/Fej5mipQJwBHQo4ERYJj7x3qJtLZmipQJwBHQo4ERYJj9z1qGtPpmipQJwBHQo4ERYJj/11qIv3JmipQJwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gs0SM3o/Us1CB9gPgSMiRoEhwjBawWSBG94c6W6hA+wFwJORIUCQ4RgvYtI/R/2dFLFSg/QA4EnIkKBIcowVsmsdY8YftLFSg/QA4EnIkKBIcowVsVKAq0GMAjoQcCYoEx2gBGxWoCvQYgCMhR4IiwTFawEYFqgI9BuBIyJGgSHCMFrDRTSQV6DEAR0KOBEWCY7SAjaYxqUCPATgSciQoEhyjBWw0kV4FegzAkZAjQZHgGC1gkztGFagXgOMhx9Y/p1sCinHN3Cqu+YkGxVi1pgrUCcDx+v60Wu2JxYlx1ewUV/1Ec2KsW1MF6gTgeH10Wq31xMLEuG62iut+ojExVq6pAnUCcLw+Pq1WemJFxlgYCmE4Xq/+iabEWLumCtQJwNFZoCHnXmCMpW1DGI4q0CaoQPsBcPQVaMzJFxdjcd0QhqMKtAkq0H4AHF0FGnT2hcVY3jeE4agCbYIKtB8AR89NpKjTTwXaBN1EKmciIxVoPwCOnmlMKtBRCMNR05iKmUpJBdoPgKNnIr0KdBTCcNRE+lImn3UVaD8Ajp4cH1yBpruJtHbWEeP0OFeB9gPg6Mrxod1ESjeNae2sI0YV6FoAOPpyjHkHTRPpm0BQXIWjCnQtABydOYa8g5YvxpYUPyWcGIPfp1WBrgWAIyFHgmLwja6SR2JiDJ8poJtIKwHgSMiRoBjl6HhbmhJj0Dvtx2ga0zoAOBJyJCgGOXomRkBijJrrccLE7lWg/QA4EnIkKKpAd8zsvdUU6AQq0H4AHAk5EhRVoPc69eurQFWgxwAcCTkSFFWgLxq8e6kCVYEeA3Ak5EhQ1E2kFtW3lptIU6hA+wFwJORIUNQ0pmYFGj+NaRIVaD8AjoQcCYqaSN+uQKMn0k+jAu0HwJGQI0GR4Lj0DpoV6KpRgfYD4EjIkaBIcFx8D01uIq0dFWg/AI6EHAmKBMfld9FiGtPaUYH2A+BIyJGgGOq4lmlMTSbSrx0VaD8AjoQcCYqRjoXXfYqxCSrQfgAcCTneK6729mxkjKXvPBKeaYJj/ZoqUCcAR0KOd4rrnSAYPI2pKBjCM01wrF9TBeoE4EjI8aC44l9RUYE2gTQaK9ZUgToBOBJy3Cuu+ZekVaBNAI3GmjVVoE4AjoQcVaBTqED7ogLtB8CRkKMKdBLdROqKCrQfAEdCjirQaTSNqScq0H4AHAk56iaSwXom0s+ENBor1lSBOgE4EnLUNKYmEBQJjvVrqkCdABwJOWoifRMIigTH+jVVoE4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFCc77j4+7stYlxYMvdoVIF6ATgSciQoznacmGHQqLUaxLj0NIjco1EF6gXgSMiRoDjXcWKOa6vWanORvGiD5h6NKlAvAEdCjgTFmY4Tv2XVrLUaXSQv2aC5R6MK1AvAkZAjQXGxAm3XWirQJqhA+wFwJORIUFSBtiD3aFSBegE4EnIkKKpAW5B7NKpAvQAcCTkSFBe7ibSiAg2+iVS250X9tqhA+wFwJORIUFxuGtN6biLFTmMq2/fShirQngAcCTkSFBecSN+qE9gT6ct+jix+jawC7QnAkZAjQXFJx0aNgI5x9J2Mk0XLv0s7Z9sqUC8AR0KOBEWCY7SAjb9AT5ctXqCzNq4C9QJwJORIUCQ4RgvYuAv0bOHSBTpv6ypQLwBHQo4ERYJjtICNt0DPly5coDM3rwL1AnAk5EhQJDhGC9h4byJdNFqL/hxfXwXaGYAjIUeCIsExWsDGO43pstGK+230YRNbUIF2BuBIyJGgSHCMFrDxTqQfaDRHf7qn3UILVAixPrZFsgaHGo/R9e47suXuhh2abKWAkTav+iHQF4AjIUeCIsGx7ebmv9l4ebXoj7HOYvxScvoic9YFqF7CuwE4EnIkKBIcm25tXpccbeJ4SUWMVQ6VBQp9CT8iU3UMfQE4EnIkKBIcG27ramaXHG/jaFGvGFWgiBGrM78NBEWCY7tNHfVndYEObSG+QDPeRBqRqTqGvgAcCTkSFAmOzbZ03J/IAq38E1Qq0M4AHAk5EhQJjq02dNKfzAKt/COo845ZBeoF4EjIkaBY7Ting3wsU6ANtnK/rONorHOfdcwqUC8AR0KOBMVax5kt5GGRAm2wmaNF6x+Nc45ZBeoF4EjIkaBY6digh4pZokAbbOd4Se7RqAL1AnAk5EhQrHNs1ERlNIqxVX2+aDKRvj8q0H4AHAk5EhQfTIE27M9Lco9GFagXgCMhR4LiQynQRfsz+WhUgXoBOBJyJCg+kAJdWDj3aFSBegE4enKcd97Ur50sxmNoN5FUoCrQjgAcHTnOO3FmrJ0rxlP69WfjAl3EmXBWq0D7AXAsz3HeiTNn7VQxnjO/i0q3oAJtggq0HwDH4hznnTmz1s4UY3uKYt0+pPFNpBZbO4dwVqtA+xHpWDjGVaBNiBuORbm2qzwVqAq0H4s7jg/k0kEOK9Bubxg6CRuORcG27Lwl+xNxVqtA+7G04/hQLh7mrAJd8Nydx/oK9GhR26vGJZ8Dwlldf/QqUC8LO46fFuWnDOom0qJXP7NYXYEeL2tboEu+CljTWT1ymDOCVIF6WdZx4rxYokDjpzE1LoKWXMTYy3Ikk5OFK87tjBWd1caZVbNJFaiXXAUaPpF+xUVwHmM/zcn+vF284tzOWM9ZPZLYrChVoF6SFWgUvALt6Tm0p7OkOunM38VqRuPYUFOBdiWsQBe4iRRIuwJdrEVOY+zb9AUXSn6ZCvkGR7ya0agCXQVhN5EWmMYUSLObSMuVWmSBDnAhsP2v55musG9xyKsZjSrQVRA3jan9RPpAWk1jWrDVVlagg4fqfLfbqd/kmFczGkePZs5BqkC9BE6kL304IcezifS15+iStba2Ah36UeOdb+Hzz1Wg40U54xhVoF5W5jj03BNyHCinms30K9A1TFgdeKpd63qPIFmBjo+z+kNUgXpZl+PgACfkeKw44yztWKCr/JUpFaiLsUPRr3L2Y1WOwyOckOPlS/iq07Rnga7xl/aXLdBcN5EmUIH2Y1WOD75A+91EWicVN5EqbiO5tY5JFuP5mipQJ6tyVIF2m8a0TvzTmComMg1/UUq2GM/WVIE6WZWjCrTbRPp14lKc+7Ombv10MZ6uqQJ1si7Hweoh5NjoJtKS0GK0adGf7i3ki/FkTRWok5U5Do1pQo6NpjEtCS7GZal9oZA7RhWol7U5DoxoQo6XcyyDRMbhxbgoKtDBNVWgTgCOhBzXr7jKUj9HBdoEFWg/AI6EHFevuM63Fc5RgTZBBdqPUsfA04+Q49oVV3pj64yuhjWRbB+/9qf6hQq0J4WOxWNtgXOAkOPKFWdOrepEZ8O6/lx3hLeoQPtR5lh8+i0xxAg5rlwRUaDdFev6c9UZ3qIC7UeRY/H5t8gQI+S4ckVCga7ecfWCdyxWoG//9R/+529VoMc0LdBlhhghx5UrEs79JRybbo0Q4i2LFeh3n1z93j+pQI8JL1D70YQc164IOPVdL3M8m5xtdrK1lae4Y/EC/e7HH/ygaZGOyFQfRz8WKtDiYVbwUEKOq1dc/5nvG2SeLbawe6ECPS7Q1leiIzLVx9GPpjeRTgu09Ka99VBCjutXXP+J7/shXb695g3aaHPLoQLtR9tpTN4GLXooIUeC4uodfS9yCjfXsvGsra2lXVWg/Wg8kd7ZoCrQfgBidL3IKdpa40vG7cbGY1zN9akKtB9TjjXDYS0F2nkoA55qwnC0FWML9MVUjEvsrQ4VaD8mHKuHwwoKtPdQBjzVhOHYtEA7z0pepq+rUIH249zxfgDUD4eKq4RJRX+O3Yfy9WGv3fboptFwXPQgCxQ9T+0Sg0AFqgI95szxfgTMGQ+ONQse6M+x/1i+frGit8CGaTMclz3IEkWPwQKuKlAV6DGXnwS8HwKzxoNjRfuBkAJdzekzQpPhuPBBFs9KXmj/BahAVaDHnDgej4F546HlOIov0IKSX9P5M0yL4bj0QQLOmId+E+mSFlU6IlN9HP1YqEBbEl6gBZviFmiB8f1DVKBTo3E1T78KtB+jBdrwB+rMrUTfRCrZGLZAC5SPHlJykEffdafR7IxZsOONeSvL7NXHcp/G9Is/veQnDT6faUSm+jj6MV6gzX6gzt1O8DSmomakFmiB8+WQmFzhom5djo06aMEngnBW6/NADyx/Po7eRGq299m9EjyRvrBAV/QW2DBDMRYX4nmDmg8veeyAY5sIl3wqVKCgAu1wRo5OY2rF/Cuz4CFbWqDreQtsGG+BntVg2VXl0aMvt23H06b55g+5CVSgnAJd8gfpgfGJ9I14OAW6mrfAhnEW6GHx+UOmD3KqQO1R0Kj5VKD1a04XKOsT6RcdBwdKpy5X72DuUcS3Uok/4axyFV2KsKIAACAASURBVOh4D04yUaAFm1GBtmHxeaAq0DuKf3mudgeVR3FYYfEAjnc28W1zGtPqcd1EGijCop2MF2jJOFCBtmH5ifSIT6RfSYHOlajuz+MXkLU7d+1s8gHTmyCcVZ5pTMdjz/UMHD1hp89dxwLVTaT6NQsLFPGbSOso0PkW1f15TO3OHTubsw3CWeWZSH8SvCucoyxPYi16Kls92wuOGRUopkBDbiKNSsx8G9S9QrcCbbKP+LPKPADXcJwRyllpurbYaBpT1ET6taAC3bN8f3YpUDcqUDf2EfiGY/vcS7bYaiL9gqhAQQXafSL9iMKDKdDqPUWfVYMxnS5wDsf2sRdsMTrGAlSgpAJdnuVvIlXQsz8vbxzXbCT4qR4M6myBdzhORlGVk70S4IwhnNUq0H4sPo2pitNrwi434b0Tdk5ZYYGeL2k5HJd6VgBnDOGsVoH2Y/GJ9HXcn6Eddn7WnzX7W1+BXixqOBwXe10AOGMIZ7UKtBsB3VjGMmf+5M5UoPV7q9vIxULAGUM4q1WgvQh4de6nV47gAh24JuxWoHWBDQcdHWMBgLNaH6jci/LCiOxZFWgBF+K9CrQusZGkw2O0Wf9ZrQLtRXljhF6pdsuxvj9XcOZfiJ8fzTIFWpfZ2MiLj9Fk9Wf1iyU/jUmfSH9McYHOaJYGTP8Zr5Z7qj/KwskMNZuu5uxopoejy+6yP6t/1ex0+drPmBeAs/qFPg+0F6Wjv/IsaYXxh2Rb7mpweyU7KZ1OW6dVyekOJ4ej0+7u4SrQNdK/QN/+67zPCR2RqT6OPqy3QC8unYZ23kmqaCfFv9Dl3rVrhSmsv4bmbtDjFVWga6J/gX73ybx3Qkdkqo+jE4WDv3uBnu7s+nqwxDpZle3k+vBQYytDB2Hs2iM7qTg+HOujrF1zZK3VnzGEs1oF2o+ysd+7QM/2dn09uPs+VoV7uX4xHebIZs4WnX6/8eEtUqDVksNrrf+MIZzVKtB+lI39mP487O/6fMHww/rIjHBthDR9CCdfOvdczDIFWn2ZPLgW4IwhnNUq0H6UOTYvqqnN9SxQc/XiAp1+4OB3zxYO1mmR4OQD7hSXKdCmb9QCzhjCWa0C7UehY6Oz5LCZybO1sEBbXBfbG2hUoIOyp6ucb6Bsz+URNL2JtBCAM4ZwVqtA+9HV8XCWTp+vpQU6/7q4vKHsm0hW3038BJhRoI7mazmNaSkAZwzhrFaB9qOn49UF0w/bfz1yE+nF7OviCY+jhUXdYhfogOx0gZaUY1HJHhTbTaRfDMAZQzirVaD96Oh42Z/TbxfeKQ5PY2opNPydoy+sTVk3kaYFRmzs7bUr0HVAUCQ41q+pAnWyugK9/N7YRPqGQiPfOF82vqn7aUwu04uiPl3b3JYKtDu5Y1SBellbgZ5/b/u/pRzHPIaWGzV1ff8Yd4OW7mNkdRVoV3LHqAL1Elqgkw86+nJpo2mHiUfecV34ONvHv0bhWoThSFAkONavqQJ1EnETaaoXT8trXh+VGk07DC8547rwcc0p3xthOBIUCY71ay5doO++eLzZfPqVCrSK02aceMj+28v30eC2SQXaZCL9aiAoEhzr11y4QN882Wz50a9VoFUUnO1DF6Bt+qh8Oxd7XXGBFtNvONYfP+CMIZzV6y3QZ5uPvrp+/XTz0Tcq0GHml8dRATXtI8+Gzh+rAnUwI4AlFBs/G4SzerUF+urx7trzzZNHv1SBDtKiPe630LKPfFs6f6S1dpubSF4rF73/tFTNugsotn4+rN+IbbenevoXaOEHKj/ffLz/9zMV6BCt+6N9f865QW5NYyp43CzmbbvTcJwVdHvF5j/RzM9kabanehYu0P97+89//M0HH/zkH0srdsezzee7f1/ui/ThFGjZyBg+eeaMqmZjcvbF7PSq14WPm8PMA3iQBTr7ab9g+i90raNBlyzQt3+z/zOcX98e7Q8d/fnu6f6l+6vHhzdB37/FsREkt1kVPuzsoVPr2lst2m8Bg2ooIEewLs2ONus68DZcHsp/fLL/O8bf3hzo7/+Rr0EfbIGWjoyhMTS1bsfxxh/ekCNYl6YKdBYXh/L251dX3/vb2//83j9eX/+L68/CHxXo2USmkcvh6ivpfpQ43g8N/wOn1i3capscC3dWSYenuvhZGOFB3kSaG9olxt+IXW6IOVjuJfzNdecf/Hb/n59t//3Scwk6cAWqAh18ZNG6pZttlOOig1sFes8MSfJNpAdRoF/ue/P66/2V512jqkDHcQyNi4etp0AXnWTS46meeX4+0In0rTvtQd9Eunnh/t7f7f9z25u/+77nNfwDvQvv+dl6/qgVFeiSDCi2OJeGruZrtwWNcTaNO+1BT2P67pN9Xd7854enS4o4zP98aPNA5/xsHV/XVaArGZpjXMbY4mw638asLRKGI0HxIU+kv6vLmwvPn1UU6IP9TaQ5bTC+bmEvHz5QeR2Dc5iLGFu8nmv7mpAwHAmKBMf6NQsL9Ov9S3nnS/h3TzcfPszfhZ9zHo+vW9YP19crentphPMYPe96jNFiG0cQhiNBkeBYv+Z0gd69B/rl4daR6ybS9fVrfRpTU4ra4Xr0z3KuhUszFWgVBEWCY/2a0wV6mLV0cyX6hycLyhv0i5v+/PSb88UjMtXH0Q+A4+oLdEDtIRToAs8HYjRGG9gsV6A3r9i3l6DHr+D3/5vHiEz1cfQD4Lj2Ah1yewAFusQTghiN0QY2C/4u/M0V59UH37/aX4D+5u5/KtD1svICHZZrIdz2oBsPx0WeEcRojDawWbBAt7/LecP3tjeObl7I7/+nAl0zi99EWuRCsYVwu4PebqfpU73MzzTGaFw9i36c3W9+/MEHP93dN9oW6H9y3EFSgcaw9DSmmdseq5IWwi37072lyVVUoCum0wcqv/3FT/+tSX2qQIdpdHotPJF+bhGs+v2FW6oEp1dRga6Y/p9IrwK9ZPbJ0er8WjbHuU0wuf46arXqEKdXuarapgngjCGc1SrQfhgfjTBjy81OsFUXqNmfK2jQmkM01lnoshtwxhDO6uUm0v/rP5z97aPvfvzBDxrcRhqRqT6OflgfzuXd3t067U6xNRdoQX/GN6gKtCGEs3rxX+V8+4s//clvT5aoQE85eol2dfi6ZHOna6Qv0KL+bFgydRtTgTaEcFYvXqD3takCHV58XKBX5a9Fj84qSoE2+aipTgVau7UKD0t+kf5UgbZBBeph3jAuKdDiIrjsXECBznmnsm+B1m+uYj1rZ0v0pwq0DSpQBzMHsqtArd2cPLBZeyyeY71l1wKds73tWs4YrV0t0J8q0DaoQMuZe45aN5HqCxQyjWkeh+MdVGzbn3ML2R3jEg1psOJn+sCaR+MBFeggQwN69lWOMY3J16Bnj3sABXr4KTGs2LQ/uxdoAARFgmP9mokLdPDcWa5AZzXohHGF4qqH7O0hTrwT0nRPKtBocseYuECHT54FC/TFcIeWWE4ZVyimHrIO5gWqGJuQO8a8BTrSYMsW6F0f+hq0kdqdYviQtQ+i34SL+mc6PEYbgiLBsX7Nh1agi91EOtr86e6L95SnQAuOwqE4J5FZz3R0jAW0VmzxAuiM3DE+vAJdaBpT+f6PH+Bbo5TiHBc4XQ6btTZd/lQ3iaSG3Gf+IEtknTvGB1igy0ykL97/6SVqyRp+xULHhaqp6DiKn+pGmVSQ+8wfYiLr+qcgd4x2gV7CKNClzrwyx6O4hr4xbNfKuDDHpaqpaYE2+6niJ/eZP8BE1jOegtwxJi7QoSe9wYlY5Gj059XI9xs1RVmOi1WTCrQfnQp0znOQO0ajQN/+4k8v+UmDv+oxIlN9HIMM9ufcM3FyIv3Jfor6s3nBvyjJcUJhPirQfvQp0FlPQu4YjQJdjBGZ6uMoosmpOPk7iFenXx1+w/3ycYv2gpnjpMJ8qZJDU4E2QQXaBBVoCW3OxSHHszI6/up0h+so0EmFFlYF29BNpCb0uYmkAh1fs6JA/zflJfwZDQv0dCPnbXT0xdkeJ/qzYUkYORb0Z4sGNRxd29I0phH6TGNSgY6v6S7Qt39PuYl0TrsCPd3KRR1d1qTdoC1rwlegI99rozJKp4n0c8h95g8zkvWcQZE7xoIC3f5d+B/87eGr3/0J5i78Oc0KdLIUj5cM7HLkG/VmA2u5CnTse34TF4SziuDYaT8zxkTuGM0C/Y8/uc3uD3av29/+/RVnGtMFTbrherT8jpYd/jvQR4MFWt9bQ2sVF6jve00hnFUEx147qh8SuWO0CvR+Iui2QXdt+r2/m9+fMQXapEGLCvQw3sYKdLhwK9QGVyu9iTTxLRVo9jO/G7ljtAr065tT6c9u//nZ9e++f/PPHze4hRR8BTqrHS4L9KQTR3Y54DDcwT6Z4fUKpzFNbtHn4YdwVhEcowVscsdoFOjbn19d/XD7ny+vrv5w259NLj+zFajjd+CG+7N3gU69IOvTnzrz20BQJDjWr2kW6Hu7yrwpz+/9SavLT3iBDlylTWx3+IH7t0FLNjBFbYFa25yzfhmEs4rgGC1gkztGo0DvPntp917oe3/WqD7hBTrjKm1UYT0F2geCIsExWsAmd4yeAn2v0cv3sAJtdBPpxYyrtPEOn9egp4qph2w3FGMTcsfoKdAftuvPoAJt8QbfTMfRDp/1Iv50We4h2w3F2ITcMToKtMX0z+gCbfAG31xHoz+rGvRsUe4h2w3F2ITcMT60Ap3PbMfhkmzy/uweQo4ERYJjtIBN7hhVoF4WcsxXoNPHsgrFadYR4zQERYJj/ZoqUCcq0DKMg1mDosEqYjQgKBIc69dUgQ4yfvIv5diuP1eRo3U4K1C0WEOMFgRFgmP9mmaBXoL9MJFyJk7+xRyb9ecacjQvqOMVTVYQowlBkeBYv6YKdICpk385x1b9uYYcVaB9ICgSHOvXnC5Q9h+Vq2Xy7F+J4xQryFEF2geCIsGxfs3pAl2MEZnq42jKogXa7DpznBXkqALtA0HxzLHDCeBGBdqUJQr0sLV273SOs4YcdROpCwTFU8ceJ4AbFWhTFijQw+asXmnCKnI0jnMNigariNGAoHji2OUEcKMCbUvzm0iXd+LmCU6zjhynj3IVitOsI8ZpCIrHjn1OADcq0HoGn8yJ57jG8bI/H0CBTkNQJDhGC9ioQAkFWv2UjDyb49tTgTaBoEhwjBawUYECCrT6OfE/nUOO1hYGCnTJIaQzvwmKsQkq0PUXaPWTUvF8DjiaWxgu0KvzhxQ7WIqE0ypawEYxNkE3kVZfoPU/1poUaMEm7h8y0qDNRtV2Mzrzm6AYm6BpTKst0MMzEVugRdu4f8Bggzb7uXy7GcJpFS2wYzJzFWgTNJF+rQV61zmAAj0ZNhdr1B/AiMvMzXRgFWf+dFgq0CbkjhFcoPdlMaN//CtWFujkGq0KtFkRL88aziojrNxnfjdyx8gt0OOymFEblysaG1KBNmEFZ5WVVu4zvxu5Y8xRoHPemR7qT9+v0PhL63wNFWgEKtAu5I4xSYG2e2fabKCaaUzmGo16TwXqQQXahdwxZinQVthbrZlIb6/R6Egw/bmGM18F2oXcMXILdJmyqCvQRjtutBlNYyrEeKpzn/ndyB0juEAXmZIbVqCt2PXnyh23rELReKZX4TgNQZHgWL8muECXmJKLL9AtuYdsS6bf7V6H4yQERYJj/ZrkAl0C842BFTharCFHC4IiwTFawCZ3jCrQU+w3VuMdTVaQowlBkeAYLWCTO0YV6AkFt/ab/GbvsnfK43O0ISgSHKMFbHLHqAI9wV2gdTeyFp5rFJ+jDUGR4BgtYJM7RhXoCRMFelh4PfT4wUeae5mtO0J8jjYERYJjtIBN7hhVoCeMF+jd0mvr4WY5FlzmziM+RxuCIsExWsAmd4wq0FOm+3O73CpQuxxVoC/6nvmVUSvGJuSOUQV6jHH9ufuOUaAF7agCfdH1zK/NWjE2IXeMKtAjxotNBdqaforVYSvGJuSOUQV6z8SZNlKgA6uUtOPC/RmdYxHdFOt/XCnGJuSOUQV6x9SZNlagly8Pi87XZfsz+ZB1ogINJneMKtA7Js+0+29ZE+mLTtdF+zP5kHWiAg0md4wq0Dumz7S775iOC19eFpB7yDpRgQaTO8ZcBTqruYwz7fAN2zG6P5MPWS/V7zgrxibkjjFVgc689is70wjDgeDYb1e1w0IxNiF3jJkKtPpS43QDxoMIw4Hg2HFflYNCMTYhd4yJCnTwJbjv3Cl5dK1jxxf2uYdsNxRjE3LHyCrQyRIaKtAFbuhUZt3z1lLuIdsNxdiE3DGiCnS6hAYKdPaL+gHqsl7CZJTcQ7YbirEJuWMkFahRQpcFWj+DZYKqrBcxGSX3kO2GYmxC7hhBBWqW0OgFqAp0fRAUCY7RAja5Y8xUoBcv8bsUaNHmVaDnEBQJjtECNrljTFWg52XWo0DLtq8CPYegSHCMFrDJHWOuAh1bxZeJucmKPfTsz+RDthuKsQm5YwQVaE0JLdKfVe+yduzP5EO2G4qxCbljjCrQKm5LqGIV50rlm7sv0KJVG1kIIVbJqq9AK3+bp+G138UFZ9/3NkvJ/TO/G4qxCbljZBVoDS0bTgXaDIIiwTFawCZ3jOkLtGnFXW5sjf2ZfMh2QzE2IXeMKtCZG1thfyYfst1QjE3IHaMKtGprZ4tabLohuYdsNxRjE3LHqAKt2VyTTS1H7iHbDcXYhNwxpi/Q1u9SAvoz+ZDthmJsQu4Y8xdo64tGwnAgOEYL2CjGJuSO8QEUaOOLRsJwIDhGC9goxibkjvEhFGhbAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YH1yBzp5VTxgOBMdoARvF2ITcMSYrULMe5/9eJ2E4EByjBWwUYxNyx5irQM16bPDJIoThQHCMFrBRjE3IHWOqAjXrscVn2xGGA8ExWsBGMTYhd4yZCtSuRxXoaiAoEhyjBWxyx/iAC7SyRwnDgeAYLWCjGJuQO8aHW6C1V6LLD4f5EwVSD9luKMYm5I7xYRXoi/P+rGiqxYdDg4kCqYdsNxRjE3LHmKlAS0rxvD/9TbX0cGgxUSD1kO2GYmxC7hhTFWjJxdvRG6CrLNAm97lSD9luKMYm5I4xV4GWv33o7an7R6pAm0BQJDhGC9jkjjFZgRbj7Kmjh6pAm0BQJDhGC9jkjvGhFqjvrcbjB6tAm0BQJDhGC9jkjvHBFqjnZvdJqekmUhMIigTHaAGb3DE+3AJ1TLfsWqCaxrQWFGMTcsf4gAu0nL4Fqon0K0ExNiF3jCrQAjoX6GzWmuMxBEWCY7SATe4YiQU6+wrNTcebSC3IPWS7oRibkDtGYIHOf4/QT79pTC3IPWS7oRibkDtGXoE2uEtdQbeJ9C3IPWS7oRibkDtGXIG2mCfp4nxXhOFAcIwWsFGMTcgdowq0aH9HCwjDgeAYLWCjGJuQO0YVaNnu7pcQhgPBMVrARjE2IXeMKlDv3gjDgeAYLWCjGJuQO0ZcgZ5dEy7cpCrQpSAoEhyjBWxyx8gr0Bfn/blkg6pAl4KgSHCMFrDJHSOwQF+c9+eCDaoCXQqCIsExWsAmd4zEAr2jw/uhuom0EARFgmO0gE3uGFWgRfs4WnDh2HFOaiG5h2w3FGMTcseoAi3ZyfHX5449J6UWknvIdkMxNiF3jCpQL2eOAQYmuYdsNxRjE3LHiC7QkPY6dQzpcIvcQ7YbirEJuWNkF2jE62cVaBMIigTHaAGb3DHCCzTgDo4KtAkERYJjtIBN7hjpBdofFWgTCIoEx2gBm9wxqkC96CZSEwiKBMdoAZvcMapAvWgaUxMIigTHaAGb3DGqQL1oIn0TCIoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscsdIK9D418uE4UBwjBawUYxNyB0jrEBXcMeGMBwIjtECNoqxCbljZBXoGuYMEYYDwTFawEYxNiF3jKgCXcWsdcJwIDhGC9goxibkjlEF6oUwHAiO0QI2irEJuWNUgXohDAeCY7SAjWJsQu4YyQUa06SE4UBwjBawUYxNyB0jqkBfXPRnQIMShgPBMVrARjE2IXeMrAJ9cdGf/RuUMBwIjtECNoqxCbljhBXo4WX71RHVx14HYTgQHKMFbBRjE3LHSCvQW65UoFPkHrLdUIxNyB0jskCvVKCT5B6y3VCMTcgdI7FAr1Sg0+Qest1QjE3IHSO/QKsPvRLCcCA4RgvYKMYm5I4RX6DVR14LYTgQHKMFbBRjE3LHSC/Q6gOvhjAcCI7RAjaKsQm5YyQWaOyHMhGGA8ExWsBGMTYhd4zIAg39WFDCcCA4RgvYKMYm5I6RWaCRH0xPGA4Ex2gBG8XYhNwxQgs0EIAjIUeCIsExWsAmd4xpCrTbNSlhOBAcowVsFGMTcseYpUD7vStKGA4Ex2gBG8XYhNwxJinQjvflCcOB4BgtYKMYm5A7xhwF2nNeKGE4EByjBWwUYxNyx6gC9UIYDgTHaAEbxdiE3DGqQL0QhgPBMVrARjE2IXeMKlAvhOFAcIwWsFGMTcgdY44C1U2kE3IP2W4oxibkjjFJgWoa0zG5h2w3FGMTcseYpUA1kf6I3EO2G4qxCbljTFOg3QA4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHeMSBfrvf7nZPPr0q9sv3n3xeLM5fKEC7QIhR4IiwTFawCZ3jAsU6K82Ox79cvvFmye7L370axVoPwg5EhQJjtECNrljbF+gLzeP/vr6+vXT29J8tvnoq+0XH32jAu0GIUeCIsExWsAmd4zNC/Td083n239vLj1v/n31eFejb57cXo+qQLtAyJGgSHCMFrDJHWPzAn3zZP9y/dnms+vr55uPd188336hAu0EIUeCIsExWsAmd4zNC/SOXYE+u70cvXld/7EKtBuEHAmKBMdoAZvcMS5WoLtX7e+e7l+6v3p8eBP0/Vua7UcIIVZCuwLdvXhXgQohHg7NCvTlbhrTUYGeTWQauRyuvpLuB8CRkCNBkeAYLWCTO8aFCvTl40fbNz8HrkBVoMtDyJGgSHCMFrDJHWOzAn15O33+9p7R8/00ehVoCIQcCYoEx2gBm9wxLlKgv9ocpn3qLnwEhBwJigTHaAGb3DE2K9B73j3bfHh4w/Mw/1PzQHtCyJGgSHCMFrDJHeMCBfrs6Pc29ZtIERByJCgSHKMFbHLH2L5Anx//3vu7p5sP9bvwvSHkSFAkOEYL2OSOsXmB7j9+acv2bc/X+jSm/hByJCgSHKMFbHLH2LxAX25OCvT69Rc3//v0m/OHjchUH0c/AI6EHAmKBMdoAZvcMTYv0EJGZKqPox8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAkNXBAqgAAEN1JREFU5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4xRBSqEENnQFagJwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4wqUC8AR0KOBEWCY7SATe4YVaBeAI6EHAmKBMdoAZvcMapAvQAcCTkSFAmO0QI2uWNUgXoBOBJyJCgSHKMFbHLHqAL1AnAk5EhQJDhGC9jkjlEF6gXgSMiRoEhwjBawyR2jCtQLwJGQI0GR4BgtYJM7RhWoF4AjIUeCIsExWsAmd4xLFeirxx99s/vPuy8ebzaffqUC7QghR4IiwTFawCZ3jAsV6Lunm9sCffNks+VHv1aB9oOQI0GR4BgtYJM7xoUK9PlmX6DPNh99df36UKcq0C4QciQoEhyjBWxyx7hMgb56vC/QV493155vnjz6pQq0G4QcCYoEx2gBm9wxLlKgNy/g/+r2PdDnm493S55vPlOBdoOQI0GR4BgtYJM7xkUK9Nnm4/1NpGebz3dLXu6LVAXaA0KOBEWCY7SATe4YlyjQlzcv328L9N3T/Uv3u5vy1+/f0mI/QgixJloU6O4NTxWoEOKh0aJAn23f77wo0LOJTCOXw9VX0v0AOBJyJCgSHKMFbHLH2L5An+/uv49egapAl4eQI0GR4BgtYJM7xmYF+nI3YX7z+avHu85UgQZCyJGgSHCMFrDJHWPzAn2+uePmVbvuwkdAyJGgSHCMFrDJHWOzAj1wWqCH+Z+aB9oTQo4ERYJjtIBN7hibF+ie/Wt2/SZSBIQcCYoEx2gBm9wxLlyg755uPtTvwveGkCNBkeAYLWCTO8aFC/T6tT6NqT+EHAmKBMdoAZvcMS5doNevv7jpz0+/Of/+iEz1cfQD4EjIkaBIcIwWsMkd41IFajEiU30c/QA4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jCpQLwBHQo4ERYJjtIBN7hhVoF4AjoQcCYoEx2gBm9wxqkC9ABwJORIUCY7RAja5Y1SBegE4EnIkKBIcowVscseoAvUCcCTkSFAkOEYL2OSOUQXqBeBIyJGgSHCMFrDJHaMK1AvAkZAjQZHgGC1gkztGFagXgCMhR4IiwTFawCZ3jFEFOsj774fuPg3KsQmKsQkPKkYVaAaUYxMUYxMeVIwq0AwoxyYoxiY8qBhVoBlQjk1QjE14UDGqQDOgHJugGJvwoGJUgWZAOTZBMTbhQcWoAs2AcmyCYmzCg4oxtkCFEAKMClQIISpRgQohRCUqUCGEqEQFKoQQlahAhRCiEhWoEEJUogIVQohKOhbouy8ebzaffjW6aOD7YoCBnP79LzebR/tFb55sdvzo1yF2GC5jPE1Ow7GI85jePd0c2OaYfjT2K9B9lMdJniwa+L4YYCCnX90O0ke/3H7x6nHyIduGgRhPktNwLOIiprMCTT8a+xXos81HX12/frr56JvhRQPfFwNc5vRy8+ivr7eLdqP05ebjQDsMA8PtJDkNxyJGY3r1ePfzPP1o7Fagrx7vf7DfXiddLBr4vhjgMqebn/mfX+8W7f59tvksTI7D0HA7Tk7DsYjRmG4G5S7M9KOxW4E+3/8oen6f6Mmige+LAS5zevNk//poN1jfPdUpX8DAcDtJTsOxiNGYnt9ek+Yfjd0K9NntZdLxNf3JooHviwEmctoV6JsnH/2vv9hs/pvufkwyEONJchqORYzFtH819ABGY68CvftR9Orx4e2Sk0UD3xcDTOR0eCtk/xb+5wF2GIZiPE5Ow7GI0ZgOV6b5R6MKlMVETreD9uVm8+ffXP+/LzbZXzvNYijG4+Q0HIsYi+nuPdH8ozGgQA8zGk4WDXxfDDCe08vbQXr42Z/+3ftZDMV4nJyGYxFjMb083JXPPxp1BcpiNKeXjx+dvEx6qQk4E0wNt21yGo5FjMR0mBdyT97RqAJlMZbT8/MXSbp0mmJquJ29INJwHGckpsuxl3c06i48jOGcfnXxJpPO/EkmhtsuOQ3HIoZjugwt72jsOA/0s5N/zxcNfF8MMJTTu2ebD+/eWNaZX8JljKfJaTgWMRzT3TueD2A06jeRYAz/Cs39z/dnt0P18m0occxAjCfJaTgWMRjT0ez5/KOxW4HeZPjh2W/Nniwa+L4YYCCn58eZvXq8nTjy+i+U4yQDMZ4kp+FYxGBMd78a9xBGY78PE3l99Lkt+08aOF50+oUY5SLHwyeG3bD9cf98//E3eX/5owkDw/EkOQ3HIgZiPHnDM/1o7Ph5oK+/uEny0120h6iPFp19IUY5z/HlXX/evl56vf1w0D9XjgZDw/E4OQ3HIgZiPJmzlH006hPphRCiEhWoEEJUogIVQohKVKBCCFGJClQIISpRgQohRCUqUCGEqEQFKoQQlahAhRCiEhWoEEJUogIVQohKVKBCCFGJClQIISpRgQohRCUqUCGEqEQFKoQQlahABYcvr65+dvTld59c/d4/3f73N3/z/aurqx/87W+PHz64UIiGqEAFh2+vrv7w9Msf7v7zmz+62vPen919d3ChEE1RgQoOb39+d8m55cur9/5u++/XV0f8cP/NwYVCtEUFKkB8fdyFN6/g/+C3twuvfv+n/3bzv//z46t9pw4vFKIxKlAB4nffv+3MHd/eviN6s+zqjw8Lb3pz94DBhUK0RgUqSHx5dDH55e3r+S9P3hjdP2BwoRCtUYEKEt/ev4a/ucjcduTNC/njdvzdD/7LP44sFKI5KlBB4vC+5/X2hfmuI8/uzN8yuFCI5qhABYqvD5eWb39+dwvp8h774EIhmqMCFSj2L9x3/9l15Nenk+tvGVwoRHNUoALF3VTQr+/+VYGKMFSggsV+8tJNkd5eiapARSAqUMHiu092zfntoSK/HXq7c3ChEM1RgQoYt6/dvzzcjT+ZW3/DP//3fxtZKERzVKACxk05/mx7Hbq/xDyb8nk7z2lwoRDNUYEKGLv5S9/eF+TXJ3M+9xOYBhcK0RoVqKCxLc8v7/vx5Nfe/+Xq9ub84EIhWqMCFTRuXpD/50+O7rJvP3jpve0HL739zY/vPrpucKEQjVGBChxfXp1eUv798Ud//vHUQiHaogIVOLavz08uKf/5+3cfPv9fpxcK0RQVqMDx9ufnH0/39n/8eFuXH/z0t9ZCIVqiAhVCiEpUoEIIUYkKVAghKlGBCiFEJSpQIYSoRAUqhBCVqECFEKISFagQQlSiAhVCiEpUoEIIUYkKVAghKlGBCiFEJSpQIYSoRAUqhBCV/H+tf0hGi8i9OwAAAABJRU5ErkJggg==" width="672" /></p>
+<pre class="r"><code>ggplot(dados_vol_arv_est, aes(VCC, RES_MOD)) + 
+  geom_point() +
+  scale_y_continuous(limits = c(-40,40) )</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
 </div>
 </div>
-<div id="metodo-de-huber" class="section level2">
-<h2>Método de Huber</h2>
-<p><span class="math display">\[ V_{secao} = AS_{1/2} . L \]</span></p>
+<div id="section" class="section level2">
+<h2></h2>
 </div>
-</div>
-<div id="calculo-do-volume-por-arvore" class="section level1">
-<h1>Cálculo do volume por árvore</h1>
-<p><span class="math display">\[ V_{arvore} = V_{secao1} + V_{secao2} + ... V_n \]</span></p>
 </div>
 
 
