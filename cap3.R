@@ -56,7 +56,47 @@ library(dplyr)
 
 
 
-## # Consistência dos dados ####
+## # Preparação dos dados ####
+## Os dados utilizados neste capítulo estão disponíveis no site github, e podem ser baixados e carregados no R utilizando a função read.csv2. Vamos realizar o download desses dados direto pelo R por meio da função, e salvar em um objeto chamado dados_sma:
+dados_invt <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt.csv")
+
+#+results="hide"
+head(dados_invt)
+
+#+echo=FALSE
+kable(head(dados_invt), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+column_spec(1:ncol(head(dados_invt)), width = "2cm")
+
+#+echo=TRUE
+dados_invt[dados_invt==0] <- NA 
+
+#+results="hide"
+head(dados_invt)
+
+#+echo=FALSE
+kable(head(dados_invt), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+  column_spec(1:ncol(head(dados_invt)), width = "2cm")
+
+#+echo=TRUE
+class(dados_invt$DATA_PL)
+
+class(dados_invt$DATA_MD)
+
+dados_invt$DATA_PL <- as.Date(dados_invt$DATA_PL, format = "%d/%m/%Y")
+dados_invt$DATA_MD <- as.Date(dados_invt$DATA_MD, format = "%d/%m/%Y")
+
+#+results="hide"
+head(dados_invt)
+
+#+echo=FALSE
+kable(head(dados_invt), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+  column_spec(1:ncol(head(dados_invt)), width = "2cm")
+
+#+echo=TRUE
+class(dados_invt$DATA_PL)
+
+class(dados_invt$DATA_MD)
+
 
 ## # Estimativa da altura das árvores não medidas ####
 
