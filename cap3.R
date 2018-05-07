@@ -162,6 +162,27 @@ head(dados_invt_hd)
 kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
   column_spec(1:ncol(head(dados_invt_hd)), width = "2cm")
 
+tabcoef_ht <- dados_invt_hd %>% 
+  mutate( I_DAP = 1/DAP ) %>% 
+  group_by(TALHAO) %>% 
+  do(Reg = lm(log(HT) ~ I_DAP + log(HD), data =.)) %>%
+  mutate(b0=coef(Reg)[1], 
+         b1=coef(Reg)[2],
+         b2=coef(Reg)[3],
+         Rsqr=summary(Reg)[[9]],
+         Std.Error=summary(Reg)[[6]]   ) %>%
+  select(-Reg)
+
+#+results="hide"
+tabcoef_ht
+
+#+echo=FALSE
+kable(tabcoef_ht, "html",digits=c(1,6,6,6,3,3)) %>%
+column_spec(1:ncol(tabcoef_ht), width = "2cm")
+
+#+echo=TRUE
+
+
 
 
 
@@ -169,6 +190,72 @@ kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
 
 
 ## ## Estimativa de altura ####
+
+dados_invt_hd <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt_hd.csv")
+
+#+results="hide"
+head(dados_invt_hd)
+
+#+echo=FALSE
+kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+  column_spec(1:ncol(head(dados_invt_hd)), width = "2cm")
+
+tabcoef_ht <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/tabcoef_ht.csv")
+
+#+results="hide"
+tabcoef_ht
+
+#+echo=FALSE
+kable(tabcoef_ht, "html",digits=c(1,2)) %>%
+column_spec(1:ncol(tabcoef_ht), width = "2cm")
+
+#+echo=TRUE
+
+dados_invt_htest <- left_join(dados_invt_hd, tabcoef_ht, by="TALHAO")
+
+#+results="hide"
+head(dados_invt_htest)
+
+#+echo=FALSE
+kable(head(dados_invt_htest), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,6,6,6,3,3)) %>%
+column_spec(1:ncol(head(dados_invt_htest)), width = "2cm")
+
+#+echo=TRUE
+
+dados_invt_htest <- dados_invt_htest %>% 
+  mutate(
+    HT_EST = ifelse(
+      is.na(HT),
+      exp(b0 + b1 * (1/DAP) + b2 * log(HD) ),
+      HT) ) %>% 
+  select(-matches("b|RSqr|Std"))
+
+#+results="hide"
+head(dados_invt_htest)
+
+#+echo=FALSE
+kable(head(dados_invt_htest), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,2)) %>%
+column_spec(1:ncol(dados_invt_htest), width = "2cm")
+
+#+echo=TRUE
+
+dados_invt_htest <- dados_invt_htest %>% 
+  left_join(tabcoef_ht, by="TALHAO") %>% 
+  mutate(
+    HT_EST = ifelse(
+      is.na(HT),
+      exp(b0 + b1 * (1/DAP) + b2 * log(HD) ),
+      HT) ) %>% 
+  select(-matches("b|RSqr|Std"))
+
+#+results="hide"
+head(dados_invt_htest)
+
+#+echo=FALSE
+kable(head(dados_invt_htest), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,2)) %>%
+  column_spec(1:ncol(dados_invt_htest), width = "2cm")
+
+
 
 ## # Estimativa de volume ####
 
