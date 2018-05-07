@@ -97,10 +97,76 @@ class(dados_invt$DATA_PL)
 
 class(dados_invt$DATA_MD)
 
+## # Estimativa das árvores não medidas ####
 
-## # Estimativa da altura das árvores não medidas ####
+## $$ Ln(Ht) = \beta_0 + \beta_1*\frac{1}{dap} + \beta_2*Ln(HD) $$ 
+##
+
+## ## Estimativa da altura dominante ####
+library(dplyr)
+
+dados_invt <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt2.csv")
+
+#+results="hide"
+head(dados_invt)
+
+#+echo=FALSE
+kable(head(dados_invt), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+column_spec(1:ncol(head(dados_invt)), width = "2cm")
+
+#+echo=TRUE
+tabhd <- dados_invt %>% 
+  filter( OBS == "D") %>% 
+  group_by(TALHAO, PARCELA) %>% 
+  summarise(HD = mean(HT) )
+
+#+results="hide"
+tabhd
+
+#+echo=FALSE
+kable(tabhd, "html",digits=c(1,1,1)) %>%
+column_spec(1:ncol(tabhd), width = "2cm")
+
+#+echo=TRUE
+dados_invt_hd <- left_join(dados_invt, tabhd, by = c("TALHAO", "PARCELA") )
+
+#+results="hide"
+head(dados_invt_hd)
+
+#+echo=FALSE
+kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,1)) %>%
+column_spec(1:ncol(head(dados_invt_hd)), width = "2cm")
+
+#+echo=TRUE
+dados_invt_hd <- dados_invt %>% 
+  filter( OBS == "D") %>% 
+  group_by(TALHAO, PARCELA) %>% 
+  summarise(HD = mean(HT) ) %>% 
+  left_join(dados_invt, ., by = c("TALHAO", "PARCELA") )
+
+#+results="hide"
+head(dados_invt_hd)
+
+#+echo=FALSE
+kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,1)) %>%
+  column_spec(1:ncol(head(dados_invt_hd)), width = "2cm")
 
 ## ## Ajuste de um modelo hipsométrico ####
+
+dados_invt_hd <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt_hd.csv")
+
+#+results="hide"
+head(dados_invt_hd)
+
+#+echo=FALSE
+kable(head(dados_invt_hd), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0)) %>%
+  column_spec(1:ncol(head(dados_invt_hd)), width = "2cm")
+
+
+
+
+
+
 
 ## ## Estimativa de altura ####
 

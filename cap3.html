@@ -228,8 +228,8 @@ div.tocify {
 
 
 
-<div id="consistencia-dos-dados" class="section level1">
-<h1>Consistência dos dados</h1>
+<div id="preparacao-dos-dados" class="section level1">
+<h1>Preparação dos dados</h1>
 <p>Os dados utilizados neste capítulo estão disponíveis no site github, e podem ser baixados e carregados no R utilizando a função read.csv2. Vamos realizar o download desses dados direto pelo R por meio da função, e salvar em um objeto chamado dados_sma:</p>
 <pre class="r"><code>dados_invt &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_invt.csv&quot;)</code></pre>
 <pre class="r"><code>head(dados_invt)</code></pre>
@@ -1000,8 +1000,952 @@ N
 <pre class="r"><code>class(dados_invt$DATA_MD)</code></pre>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
 </div>
-<div id="estimativa-da-altura-das-arvores-nao-medidas" class="section level1">
-<h1>Estimativa da altura das árvores não medidas</h1>
+<div id="estimativa-das-arvores-nao-medidas" class="section level1">
+<h1>Estimativa das árvores não medidas</h1>
+<p><span class="math display">\[ Ln(Ht) = \beta_0 + \beta_1*\frac{1}{dap} + \beta_2*Ln(HD) \]</span></p>
+<div id="estimativa-da-altura-dominante" class="section level2">
+<h2>Estimativa da altura dominante</h2>
+<pre class="r"><code>dados_invt &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_invt2.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_invt)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:left;">
+OBS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabhd &lt;- dados_invt %&gt;% 
+  filter( OBS == &quot;D&quot;) %&gt;% 
+  group_by(TALHAO, PARCELA) %&gt;% 
+  summarise(HD = mean(HT) )</code></pre>
+<pre class="r"><code>tabhd</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:right;">
+HD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+25.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+7
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+8
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+9
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+10
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+11
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.5
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>dados_invt_hd &lt;- left_join(dados_invt, tabhd, by = c(&quot;TALHAO&quot;, &quot;PARCELA&quot;) )</code></pre>
+<pre class="r"><code>head(dados_invt_hd)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:left;">
+OBS
+</th>
+<th style="text-align:right;">
+HD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>dados_invt_hd &lt;- dados_invt %&gt;% 
+  filter( OBS == &quot;D&quot;) %&gt;% 
+  group_by(TALHAO, PARCELA) %&gt;% 
+  summarise(HD = mean(HT) ) %&gt;% 
+  left_join(dados_invt, ., by = c(&quot;TALHAO&quot;, &quot;PARCELA&quot;) )</code></pre>
+<pre class="r"><code>head(dados_invt_hd)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:left;">
+OBS
+</th>
+<th style="text-align:right;">
+HD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:left;width: 2cm; ">
+N
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="estimativa-da-altura-das-arvores-nao-medidas" class="section level2">
+<h2>Estimativa da altura das árvores não medidas</h2>
+</div>
 <div id="ajuste-de-um-modelo-hipsometrico" class="section level2">
 <h2>Ajuste de um modelo hipsométrico</h2>
 </div>
