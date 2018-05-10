@@ -354,7 +354,8 @@ tab_invt <- dados_invt_v_est %>%
     HD      = mean(HD,na.rm=T), 
     G_HA    = sum(AS,na.rm=T)*10000/AREA_PC , 
     VCC_HA  = sum(VCC,na.rm=T)*10000/AREA_PC, 
-    VSC_HA  = sum(VSC,na.rm=T)*10000/AREA_PC ) 
+    VSC_HA  = sum(VSC,na.rm=T)*10000/AREA_PC ) %>% 
+  ungroup
 
 #+results="hide"
 tab_invt
