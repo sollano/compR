@@ -2632,8 +2632,7 @@ Std.Error
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>dados_invt_htest &lt;- dados_invt_hd %&gt;% 
-  left_join(tabcoef_ht, by=&quot;TALHAO&quot;)</code></pre>
+<pre class="r"><code>dados_invt_htest &lt;- left_join(dados_invt_hd, tabcoef_ht, by=&quot;TALHAO&quot;)</code></pre>
 <pre class="r"><code>head(dados_invt_htest)</code></pre>
 <table>
 <thead>
@@ -3292,13 +3291,2512 @@ NA
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>dados_invt_htest &lt;- dados_invt_htest %&gt;% 
+  left_join(tabcoef_ht, by=&quot;TALHAO&quot;) %&gt;% 
+  mutate(
+    HT_EST = ifelse(
+      is.na(HT),
+      exp(b0 + b1 * (1/DAP) + b2 * log(HD) ),
+      HT) ) %&gt;% 
+  select(-matches(&quot;b|RSqr|Std&quot;))</code></pre>
+<pre class="r"><code>head(dados_invt_htest)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="estimativa-de-volume" class="section level1">
 <h1>Estimativa de volume</h1>
+<pre class="r"><code>dados_invt_htest &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_invt_htest.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_invt_htest)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vcc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+<th style="text-align:right;">
+Rsqr
+</th>
+<th style="text-align:right;">
+Rsqr_adj
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+-9.595863
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.889372
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.907163
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.997
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.049
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tabcoef_vsc </code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+b0
+</th>
+<th style="text-align:right;">
+b1
+</th>
+<th style="text-align:right;">
+b2
+</th>
+<th style="text-align:right;">
+Rsqr
+</th>
+<th style="text-align:right;">
+Rsqr_adj
+</th>
+<th style="text-align:right;">
+Std.Error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+-9.808975
+</td>
+<td style="text-align:right;width: 2cm; ">
+1.918007
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.908154
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.996
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.996
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.053
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_invt_v_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2011
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1762
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1535
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1339
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2080
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1822
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2067
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1811
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2049
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1795
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1671
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1461
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>dados_invt_v_est &lt;- dados_invt_v_est %&gt;% 
+  mutate(
+    AS = pi*DAP^2/40000,
+    I  = as.numeric((as.Date(DATA_MD) - as.Date(DATA_PL))/30)
+  )</code></pre>
+<pre class="r"><code>head(dados_invt_v_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+AS
+</th>
+<th style="text-align:right;">
+I
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2011
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1762
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1535
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1339
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0133
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2080
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1822
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2067
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1811
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2049
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1795
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1671
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1461
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0154
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>head(dados_invt_v_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+AS
+</th>
+<th style="text-align:right;">
+I
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2011
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1762
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1535
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1339
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0133
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2080
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1822
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2067
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1811
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2049
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1795
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1671
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1461
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0154
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="quantificacao-de-parcelas" class="section level1">
 <h1>Quantificação de parcelas</h1>
+<pre class="r"><code>dados_invt_htest &lt;- read.csv2(&quot;https://raw.githubusercontent.com/sollano/compR/master/dados_invt_v_est.csv&quot;)</code></pre>
+<pre class="r"><code>head(dados_invt_v_est)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:left;">
+DATA_PL
+</th>
+<th style="text-align:left;">
+ESPAC
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:left;">
+DATA_MD
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+COVA
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+HT_EST
+</th>
+<th style="text-align:right;">
+VCC
+</th>
+<th style="text-align:right;">
+VSC
+</th>
+<th style="text-align:right;">
+AS
+</th>
+<th style="text-align:right;">
+I
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2011
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1762
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+13
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.80
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1535
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1339
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0133
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.70
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2080
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1822
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+NA
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.53
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2067
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1811
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+15
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.30
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.2049
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1795
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0177
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:left;width: 2cm; ">
+2007-04-01
+</td>
+<td style="text-align:left;width: 2cm; ">
+3x3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:left;width: 2cm; ">
+2012-09-04
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+25
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.40
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1671
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.1461
+</td>
+<td style="text-align:right;width: 2cm; ">
+0.0154
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tab_invt</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+TALHAO
+</th>
+<th style="text-align:right;">
+PARCELA
+</th>
+<th style="text-align:right;">
+INDV_HA
+</th>
+<th style="text-align:right;">
+IDADE
+</th>
+<th style="text-align:right;">
+AREA_TL
+</th>
+<th style="text-align:right;">
+AREA_PC
+</th>
+<th style="text-align:right;">
+DAP
+</th>
+<th style="text-align:right;">
+q
+</th>
+<th style="text-align:right;">
+HT
+</th>
+<th style="text-align:right;">
+HD
+</th>
+<th style="text-align:right;">
+G_HA
+</th>
+<th style="text-align:right;">
+VCC_HA
+</th>
+<th style="text-align:right;">
+VSC_HA
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+1
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.2
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.2
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+25.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+203.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+178.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.2
+</td>
+<td style="text-align:right;width: 2cm; ">
+206.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+180.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+3
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+63.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+143.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+125.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+7
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.4
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+217.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+190.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+2
+</td>
+<td style="text-align:right;width: 2cm; ">
+8
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+66.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+45
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+23.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+24.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+211.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+185.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+63.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+51
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+125.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+109.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+5
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+63.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+51
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+12.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+18.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+19.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+132.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+115.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+9
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+65.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+51
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.6
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+20.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+161.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+140.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+10
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+65.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+51
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+14.0
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+17.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+178.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+155.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;width: 2cm; ">
+4
+</td>
+<td style="text-align:right;width: 2cm; ">
+11
+</td>
+<td style="text-align:right;width: 2cm; ">
+1111.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+65.1
+</td>
+<td style="text-align:right;width: 2cm; ">
+51
+</td>
+<td style="text-align:right;width: 2cm; ">
+810
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+13.9
+</td>
+<td style="text-align:right;width: 2cm; ">
+21.8
+</td>
+<td style="text-align:right;width: 2cm; ">
+22.5
+</td>
+<td style="text-align:right;width: 2cm; ">
+16.7
+</td>
+<td style="text-align:right;width: 2cm; ">
+177.3
+</td>
+<td style="text-align:right;width: 2cm; ">
+155.0
+</td>
+</tr>
+</tbody>
+</table>
 <div id="section" class="section level5">
 <h5></h5>
 </div>

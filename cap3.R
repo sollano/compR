@@ -259,7 +259,113 @@ kable(head(dados_invt_htest), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,2)) %>%
 
 ## # Estimativa de volume ####
 
+dados_invt_htest <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt_htest.csv")
+
+#+results="hide"
+head(dados_invt_htest)
+
+#+echo=FALSE
+kable(head(dados_invt_htest), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,2)) %>%
+  column_spec(1:ncol(dados_invt_htest), width = "2cm")
+
+tabcoef_vcc <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/tabcoef_vcc.csv")
+#+results="hide"
+tabcoef_vcc 
+#+echo=FALSE
+kable( tabcoef_vcc, "html", digits=c(6,6,6,3,3,3) )%>% 
+  column_spec(1:ncol(tabcoef_vcc), width = "2cm")
+
+tabcoef_vsc <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/tabcoef_vsc.csv")
+#+results="hide"
+tabcoef_vsc 
+#+echo=FALSE
+kable( tabcoef_vsc, "html", digits=c(6,6,6,3,3,3) )%>% 
+  column_spec(1:ncol(tabcoef_vcc), width = "2cm")
+
+
+dados_invt_v_est  <- dados_invt_htest  %>% 
+  cbind(tabcoef_vcc) %>% 
+  mutate(VCC = exp(b0 + b1*log(DAP) + b2*log(HT_EST)) ) %>% 
+  select(-matches("b|Rsqr|Std")) %>% 
+  cbind(tabcoef_vsc) %>% 
+  mutate(VSC = exp(b0 + b1*log(DAP) + b2*log(HT_EST)) ) %>% 
+  select(-matches("b|Rsqr|Std"))
+#+results="hide"
+head(dados_invt_v_est)
+
+#+echo=FALSE
+kable(head(dados_invt_v_est), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,4,4)) %>%
+column_spec(1:ncol(head(dados_invt_v_est)), width = "2cm")
+
+#+echo=TRUE   
+
+dados_invt_v_est <- dados_invt_v_est %>% 
+  mutate(
+    AS = pi*DAP^2/40000,
+    I  = as.numeric((as.Date(DATA_MD) - as.Date(DATA_PL))/30)
+  )
+#+results="hide"
+head(dados_invt_v_est)
+
+#+echo=FALSE
+kable(head(dados_invt_v_est), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,4,4,4,1)) %>%
+  column_spec(1:ncol(head(dados_invt_v_est)), width = "2cm")
+
+
+dados_invt_v_est  <- dados_invt_htest  %>% 
+  cbind(tabcoef_vcc) %>% 
+  mutate(VCC = exp(b0 + b1*log(DAP) + b2*log(HT_EST)) ) %>% 
+  select(-matches("b|Rsqr|Std")) %>% 
+  cbind(tabcoef_vsc) %>% 
+  mutate(
+    VSC = exp(b0 + b1*log(DAP) + b2*log(HT_EST)),
+    AS  = pi*DAP^2/40000,
+    I   = as.numeric((as.Date(DATA_MD) - as.Date(DATA_PL))/30) ) %>% 
+  select(-matches("b|Rsqr|Std"))
+#+results="hide"
+head(dados_invt_v_est)
+
+#+echo=FALSE
+kable(head(dados_invt_v_est), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,4,4,4,1)) %>%
+  column_spec(1:ncol(head(dados_invt_v_est)), width = "2cm")
+
+
 ## # Quantificação de parcelas ####
+dados_invt_htest <- read.csv2("https://raw.githubusercontent.com/sollano/compR/master/dados_invt_v_est.csv")
+#+results="hide"
+head(dados_invt_v_est)
+
+#+echo=FALSE
+kable(head(dados_invt_v_est), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,4,4,4,1)) %>%
+  column_spec(1:ncol(head(dados_invt_v_est)), width = "2cm")
+
+
+
+tab_invt <- dados_invt_v_est %>% 
+  group_by(TALHAO, PARCELA) %>%
+  summarise(
+    INDV_HA = n()*10000/mean(AREA_PC,na.rm=T), 
+    IDADE   = mean(I ,na.rm=T),
+    AREA_TL = mean(AREA_TL,na.rm=T),  
+    AREA_PC = mean(AREA_PC,na.rm=T), 
+    DAP     = mean(DAP,na.rm=T) ,
+    q       = sqrt(mean(AS,na.rm=T)*40000/pi),
+    HT      = mean(HT_EST,na.rm=T), 
+    HD      = mean(HD,na.rm=T), 
+    G_HA    = sum(AS,na.rm=T)*10000/AREA_PC , 
+    VCC_HA  = sum(VCC,na.rm=T)*10000/AREA_PC, 
+    VSC_HA  = sum(VSC,na.rm=T)*10000/AREA_PC ) 
+
+#+results="hide"
+tab_invt
+
+#+echo=FALSE
+kable(tab_invt, "html",digits=c(1,1,1,1,1,1,1,1,1,1,1,1,1)) %>%
+column_spec(1:ncol(tab_invt), width = "2cm")
+
+#+echo=TRUE
+
+
 
 ## #####
 
