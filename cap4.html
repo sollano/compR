@@ -691,7 +691,7 @@ VSC_HA
 <pre class="r"><code>alpha &lt;- 0.05 
 Erro_des &lt;- 10
 
-tab_cs &lt;- tab_invt %&gt;%
+tab_acs &lt;- tab_invt %&gt;%
   group_by(TALHAO) %&gt;%
   summarise(
     IDADE        = mean(IDADE),
@@ -717,7 +717,7 @@ tab_cs &lt;- tab_invt %&gt;%
     IC_Total_inf = Yhat - Erro_Total,
     IC_Total_Sup = Yhat + Erro_Total) %&gt;% 
   as.data.frame</code></pre>
-<pre class="r"><code>tab_cs</code></pre>
+<pre class="r"><code>tab_acs</code></pre>
 <table>
 <thead>
 <tr>
@@ -892,7 +892,7 @@ IC_Total_Sup
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>tab_cs</code></pre>
+<pre class="r"><code>tab_acs</code></pre>
 <table>
 <thead>
 <tr>
