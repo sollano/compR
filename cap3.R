@@ -344,7 +344,8 @@ kable(head(dados_invt_v_est), "html",digits=c(1,1,0,0,1,0,1,1,1,1,0,2,4,4,4,1)) 
 tab_invt <- dados_invt_v_est %>% 
   group_by(TALHAO, PARCELA) %>%
   summarise(
-    INDV_HA = n()*10000/mean(AREA_PC,na.rm=T), 
+    INDV   = n(),
+    INDV_HA = INDV*10000/mean(AREA_PC,na.rm=T), 
     IDADE   = mean(I ,na.rm=T),
     AREA_TL = mean(AREA_TL,na.rm=T),  
     AREA_PC = mean(AREA_PC,na.rm=T), 
@@ -352,16 +353,19 @@ tab_invt <- dados_invt_v_est %>%
     q       = sqrt(mean(AS,na.rm=T)*40000/pi),
     HT      = mean(HT_EST,na.rm=T), 
     HD      = mean(HD,na.rm=T), 
-    G_HA    = sum(AS,na.rm=T)*10000/AREA_PC , 
-    VCC_HA  = sum(VCC,na.rm=T)*10000/AREA_PC, 
-    VSC_HA  = sum(VSC,na.rm=T)*10000/AREA_PC ) %>% 
+    G       = sum(AS,na.rm=T),
+    G_HA    = G*10000/AREA_PC , 
+    VCC     = sum(VCC,na.rm=T),
+    VCC_HA  = VCC*10000/AREA_PC,
+    VSC     = sum(VSC,na.rm=T),
+    VSC_HA  = VSC*10000/AREA_PC ) %>% 
   ungroup
 
 #+results="hide"
 tab_invt
 
 #+echo=FALSE
-kable(tab_invt, "html",digits=c(1,1,1,1,1,1,1,1,1,1,1,1,1)) %>%
+kable(tab_invt, "html",digits=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)) %>%
 column_spec(1:ncol(tab_invt), width = "2cm")
 
 #+echo=TRUE

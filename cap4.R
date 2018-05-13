@@ -66,32 +66,36 @@ kable(tab_invt, "html",digits=c(1,1,1,1,1,1,1,1,1,1,1,1,1)) %>%
 
 ## # Amostragem casual simples ####
 
+## ## Populacao finita ####
+
 alpha <- 0.05 
 Erro_des <- 10
 
 tab_acs <- tab_invt %>%
   group_by(TALHAO) %>%
   summarise(
-    IDADE        = mean(IDADE,na.rm=T),
-    n            = n(),
-    N            = mean(AREA_TL,na.rm=T) / (mean(AREA_PC,na.rm=T)/10000), 
-    CV           = sd(VCC_HA,na.rm=T) / mean(VCC_HA,na.rm=T) * 100,
-    t            = qt(alpha/2,n-1, lower.tail = F),
-    t_rec        = qt(alpha/2,ceiling(
+    IDADE= mean(IDADE,na.rm=T),
+    n    = n(),
+    N    = mean(AREA_TL,na.rm=T)/(mean(AREA_PC,na.rm=T)/10000), 
+    CV   = sd(VCC,na.rm=T)/mean(VCC,na.rm=T) * 100,
+    t    = qt(alpha/2,n-1, lower.tail = F),
+    t_rec= qt(alpha/2,ceiling(
       t^2 * CV^2 / ( Erro_des^2 +(t^2 * CV^2 / N) ) ) - 1,
       lower.tail = F), 
     
     n_recalc     = ceiling(
       t_rec ^2 * CV^2 / ( Erro_des^2 +(t_rec^2 * CV^2 / N) ) ), 
     
-    Y            = mean(VCC_HA, na.rm=T),
-    Sy           = sqrt( var(VCC_HA,na.rm=T)/n  * (1 - (n/N)) ),
+    Y            = mean(VCC, na.rm=T),
+    Sy           = sqrt( var(VCC,na.rm=T)/n  * (1 - (n/N)) ),
     Erroabs      = Sy * t , 
     Erroperc     = Erroabs / Y * 100 , 
-    Yhat         = Y * N, 
-    Erro_Total   = Erroabs * N, 
-    IC_ha_Inf    = Y - Erroabs,
-    IC_ha_Sup    = Y + Erroabs,
+    Yhat         = Y*N, 
+    Erro_Total   = Erroabs*N, 
+    IC_Inf       = Y - Erroabs,
+    IC_Sup       = Y + Erroabs,
+    IC_ha_Inf    = (Y - Erroabs)*10000/mean(AREA_PC,na.rm=T),
+    IC_ha_Sup    = (Y + Erroabs)*10000/mean(AREA_PC,na.rm=T),
     IC_Total_inf = Yhat - Erro_Total,
     IC_Total_Sup = Yhat + Erro_Total) %>% 
   as.data.frame
@@ -100,9 +104,10 @@ tab_acs <- tab_invt %>%
 tab_acs
 
 #+echo=FALSE
-kable(tab_acs, "html",digits=c(1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1)) %>%
+kable(tab_acs, "html",digits=c(1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1,1,1)) %>%
   column_spec(1:ncol(tab_acs), width = "2cm")
 
+## ## Populacao infinita ####
 
 alpha <- 0.05 
 Erro_des <- 10
@@ -110,24 +115,26 @@ Erro_des <- 10
 tab_acs <- tab_invt %>%
   group_by(TALHAO) %>%
   summarise(
-    IDADE        = mean(IDADE,na.rm=T),
-    n            = n(),
-    N            = mean(AREA_TL,na.rm=T) / ( mean(AREA_PC,na.rm=T)/10000), 
-    CV           = sd(VCC_HA,na.rm=T) / mean(VCC_HA,na.rm=T)*100,
-    t            = qt(alpha/2,n-1, lower.tail = F),
+    IDADE= mean(IDADE,na.rm=T),
+    n    = n(),
+    N    = mean(AREA_TL,na.rm=T) / ( mean(AREA_PC,na.rm=T)/10000), 
+    CV   = sd(VCC,na.rm=T) / mean(VCC,na.rm=T)*100,
+    t    = qt(alpha/2,n-1, lower.tail = F),
     
-    t_rec        = qt(alpha/2,ceiling( 
+    t_rec= qt(alpha/2,ceiling( 
       t^2 * CV^2 / Erro_des^2) - 1,lower.tail=F), 
     
     n_recalc     = ceiling( t_rec ^2 * CV^2 / Erro_des^2),  
-    Y            = mean(VCC_HA, na.rm=T),
-    Sy           = sqrt( var(VCC_HA,na.rm=T)/n ),
+    Y            = mean(VCC, na.rm=T),
+    Sy           = sqrt( var(VCC,na.rm=T)/n ),
     Erroabs      = Sy * t , 
     Erroperc     = Erroabs / Y * 100, 
-    Yhat         = Y * N, 
-    Erro_Total   = Erroabs * N, 
-    IC_ha_Inf    = Y - Erroabs,
-    IC_ha_Sup    = Y + Erroabs,
+    Yhat         = Y*N, 
+    Erro_Total   = Erroabs*N, 
+    IC_Inf       = Y - Erroabs,
+    IC_Sup       = Y + Erroabs,
+    IC_ha_Inf    = (Y - Erroabs)*10000/mean(AREA_PC,na.rm=T),
+    IC_ha_Sup    = (Y + Erroabs)*10000/mean(AREA_PC,na.rm=T),
     IC_Total_inf = Yhat - Erro_Total,
     IC_Total_Sup = Yhat + Erro_Total) %>% 
   as.data.frame
@@ -136,7 +143,7 @@ tab_acs <- tab_invt %>%
 tab_acs
 
 #+echo=FALSE
-kable(tab_acs, "html",digits=c(1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1)) %>%
+kable(tab_acs, "html",digits=c(1,1,1,1,4,4,1,1,2,1,2,1,1,1,1,1,1,1,1)) %>%
 column_spec(1:ncol(tab_acs), width = "2cm")
 
 
@@ -145,6 +152,7 @@ column_spec(1:ncol(tab_acs), width = "2cm")
 
 
 ## # Amostragem casual estratificada ####
+## ## Populacao finita ####
 
 alpha <- 0.05 
 Erro_des <- 10
@@ -159,15 +167,16 @@ tab_ace_1 <- tab_invt %>%
   group_by(TALHAO) %>% 
   summarise(
     IDADE  = mean(IDADE,na.rm=T),
+    AREA_PC= mean(AREA_PC,na.rm=T),
     nj     = n() , 
     Nj     = mean(Nj,na.rm=T),
     N      = mean(N,na.rm=T),
     Pj     = Nj/mean(N,na.rm=T), 
-    Eyj    = sum(VCC_HA,na.rm=T), 
-    Eyj2   = sum(VCC_HA^2,na.rm=T),
-    Yj     = mean(VCC_HA,na.rm=T), 
-    Pj_Sj2 = Pj * var(VCC_HA,na.rm=T),
-    Pj_Sj  = Pj * sd(VCC_HA,na.rm=T),
+    Eyj    = sum(VCC,na.rm=T), 
+    Eyj2   = sum(VCC^2,na.rm=T),
+    Yj     = mean(VCC,na.rm=T), 
+    Pj_Sj2 = Pj * var(VCC,na.rm=T),
+    Pj_Sj  = Pj * sd(VCC,na.rm=T),
     Pj_Yj  = Pj * Yj) %>%
   ungroup %>%
   mutate( 
@@ -175,18 +184,25 @@ tab_ace_1 <- tab_invt %>%
     EPj_Sj   = sum(Pj_Sj), 
     Y        = sum(Pj_Yj),     
     CV       = EPj_Sj / Y * 100,
-    t        = qt(alpha/2, df = sum(nj)-1, lower.tail = FALSE),     
+    t        = qt(alpha/2, df = sum(nj)-1, lower.tail = F),     
     t_rec    = qt(
         alpha/2, df = ceiling(
         t^2 * EPj_Sj^2 / ( (Erro_des*Y/100)^2 + (t^2 * EPj_Sj2 / N )  ) )-1, 
-        lower.tail = FALSE),
+        lower.tail = F),
     n_recalc = ceiling( 
         t_rec^2 * EPj_Sj^2 / ( (Erro_des*Y/100)^2 + (t_rec^2 * EPj_Sj2 / N )  ) ), 
     nj_otimo = ceiling(n_recalc*Pj_Sj/EPj_Sj), 
     n_otimo  = sum(nj_otimo), 
     Yhatj    = Nj * Yj ) %>% 
   as.data.frame
-tab_ace_1  
+
+#+results="hide"
+tab_ace_1
+
+#+echo=FALSE
+kable(tab_ace_1, "html",digits=c(1,1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1,1,1)) %>%
+  column_spec(1:ncol(tab_ace_1), width = "2cm")
+
 
 ## Tabela final:
 
@@ -200,13 +216,96 @@ tab_ace_2 <- tab_ace_1 %>%
     Erroperc     = Erroabs / Y * 100, 
     Yhat         = sum(Nj) * Y, 
     Erro_Total   = Erroabs * sum(Nj),
-    IC_ha_Inf    = Y - Erroabs, 
-    IC_ha_Sup    = Y + Erroabs, 
+    IC_Inf       = Y - Erroabs,
+    IC_Sup       = Y + Erroabs,
+    IC_ha_Inf    = (Y - Erroabs)*10000/mean(AREA_PC),
+    IC_ha_Sup    = (Y + Erroabs)*10000/mean(AREA_PC),
     IC_Total_inf = Yhat - Erro_Total, 
     IC_Total_Sup = Yhat + Erro_Total ) %>% 
   as.data.frame 
 
+#+results="hide"
 tab_ace_2
+
+#+echo=FALSE
+kable(tab_ace_2, "html",digits=c(4,2,1,1,2,1,1,1,1,1,1,1,1)) %>%
+column_spec(1:ncol(tab_ace_2), width = "2cm")
+
+#+echo=TRUE
+
+## ## Populacao infinita ####
+
+alpha <- 0.05
+Erro_des <- 10
+
+tab_ace_1 <- tab_invt %>% 
+  group_by(TALHAO) %>% 
+  summarise(Nj = mean(AREA_TL,na.rm=T)/(mean(AREA_PC,na.rm=T)/10000) ) %>%
+  summarise(N  = sum(Nj,na.rm=T) ) %>% 
+  select(N) %>% 
+  cbind(tab_invt,.) %>% 
+  mutate(Nj = AREA_TL / (AREA_PC/10000) ) %>% 
+  group_by(TALHAO) %>% 
+  summarise(
+    IDADE  = mean(IDADE,na.rm=T),
+    AREA_PC= mean(AREA_PC,na.rm=T),
+    nj     = n() , 
+    Nj     = mean(Nj,na.rm=T), 
+    N      = mean(N,na.rm=T),
+    Pj     = Nj/mean(N,na.rm=T), 
+    Eyj    = sum(VCC,na.rm=T), 
+    Eyj2   = sum(VCC^2,na.rm=T), 
+    Yj     = mean(VCC,na.rm=T), 
+    Pj_Sj2 = Pj * var(VCC,na.rm=T),
+    Pj_Sj  = Pj * sd(VCC,na.rm=T),
+    Pj_Yj  = Pj * Yj) %>%
+  ungroup %>%
+  mutate(
+    EPj_Sj2  =   sum(Pj_Sj2), 
+    EPj_Sj   =   sum(Pj_Sj), 
+    Y        =   sum(Pj_Yj),  
+    CV       = EPj_Sj / Y * 100,  
+    t        = qt(alpha/2, df = sum(nj)-1, lower.tail = F),     
+    t_rec    = qt(alpha/2, df = ceiling(
+       t^2 * EPj_Sj^2 / (Erro_des*Y/100)^2 )-1, lower.tail = F),
+    n_recalc = ceiling( t_rec^2 * EPj_Sj^2 / (Erro_des*Y/100)^2 ), 
+    nj_otimo = ceiling(n_recalc*Pj_Sj/EPj_Sj), 
+    n_otimo  = sum(nj_otimo), 
+    Yhatj    = Nj * Yj ) %>%  
+  as.data.frame 
+
+#+results="hide"
+tab_ace_1
+
+#+echo=FALSE
+kable(tab_ace_1, "html",digits=c(1,1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1,1,1)) %>%
+  column_spec(1:ncol(tab_ace_1), width = "2cm")
+
+tab_ace_2 <- tab_ace_1 %>%
+  summarise(
+    t            = mean(t),
+    Sy           = sqrt(sum(Pj_Sj)^2 / sum(nj) ), 
+    Y            = sum(Pj_Yj), 
+    Erroabs      = Sy * t, 
+    Erroperc     = Erroabs / Y * 100, 
+    Yhat         = sum(Nj) * Y,
+    Erro_Total   = Erroabs * sum(Nj), 
+    IC_Inf       = Y - Erroabs,
+    IC_Sup       = Y + Erroabs,
+    IC_ha_Inf    = (Y - Erroabs)*10000/mean(AREA_PC),
+    IC_ha_Sup    = (Y + Erroabs)*10000/mean(AREA_PC),
+    IC_Total_inf = Yhat - Erro_Total, 
+    IC_Total_Sup = Yhat + Erro_Total ) %>% 
+  as.data.frame 
+
+#+results="hide"
+tab_ace_2
+
+#+echo=FALSE
+kable(tab_ace_2, "html",digits=c(4,2,1,1,2,1,1,1,1,1,1,1,1)) %>%
+  column_spec(1:ncol(tab_ace_2), width = "2cm")
+
+
 
 ## # Amostragem sistemática ####
 
@@ -216,24 +315,26 @@ Erro_des <- 10
 tab_as <- tab_invt %>%
   group_by(TALHAO) %>%
   summarise(
-    IDADE        = mean(IDADE,na.rm=T),
-    n            = n(),
-    N            = mean(AREA_TL,na.rm=T) / ( mean(AREA_PC,na.rm=T)/10000), 
-    CV           = sd(VCC_HA,na.rm=T) / mean(VCC_HA,na.rm=T)*100,
-    t            = qt(alpha/2,n-1, lower.tail = F),
+    IDADE= mean(IDADE,na.rm=T),
+    n    = n(),
+    N    = mean(AREA_TL,na.rm=T)/( mean(AREA_PC,na.rm=T)/10000), 
+    CV   = sd(VCC,na.rm=T)/mean(VCC,na.rm=T)*100,
+    t    = qt(alpha/2,n-1, lower.tail = F),
     
-    t_rec        = qt(alpha/2,ceiling( 
+    t_rec= qt(alpha/2,ceiling( 
       t^2 * CV^2 / Erro_des^2) - 1,lower.tail=F), 
     
     n_recalc     = ceiling( t_rec ^2 * CV^2 / Erro_des^2),  
-    Y            = mean(VCC_HA, na.rm=T),
-    Sy           = sqrt((sum(diff(VCC_HA)^2) / (2 * n * (n-1) ) ) * ((N-n)/N)),
+    Y            = mean(VCC, na.rm=T),
+    Sy           = sqrt((sum(diff(VCC)^2) / (2 * n * (n-1) ) ) * ((N-n)/N)),
     Erroabs      = Sy * t , 
     Erroperc     = Erroabs / Y * 100, 
     Yhat         = Y * N, 
     Erro_Total   = Erroabs * N, 
-    IC_ha_Inf    = Y - Erroabs,
-    IC_ha_Sup    = Y + Erroabs,
+    IC_Inf       = Y - Erroabs,
+    IC_Sup       = Y + Erroabs,
+    IC_ha_Inf    = (Y - Erroabs)*10000/mean(AREA_PC,na.rm=T),
+    IC_ha_Sup    = (Y + Erroabs)*10000/mean(AREA_PC,na.rm=T),
     IC_Total_inf = Yhat - Erro_Total,
     IC_Total_Sup = Yhat + Erro_Total) %>% 
   as.data.frame
@@ -242,7 +343,7 @@ tab_as <- tab_invt %>%
 tab_as
 
 #+echo=FALSE
-kable(tab_as, "html",digits=c(1,1,1,1,2,2,1,1,2,2,2,1,1,1,1,1,1)) %>%
+kable(tab_as, "html",digits=c(1,1,1,1,4,4,1,1,2,1,2,1,1,1,1,1,1)) %>%
   column_spec(1:ncol(tab_acs), width = "2cm")
 
 
