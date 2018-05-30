@@ -152,6 +152,24 @@ column_spec(1:ncol(tab_acs), width = "2cm")
 
 
 ## # Amostragem casual estratificada ####
+
+tab_invt %>% 
+  group_by(TALHAO) %>% 
+  summarise(
+    Nj = mean(AREA_TL,na.rm=T) / (mean(AREA_PC,na.rm=T)/10000) ) 
+
+
+tab_invt %>% 
+  group_by(TALHAO) %>% 
+  summarise(
+    Nj = mean(AREA_TL,na.rm=T) / (mean(AREA_PC,na.rm=T)/10000) ) %>% 
+  summarise(
+    N  = sum(Nj,na.rm=T) ) %>% 
+  select(N) # Caso se tenha mais de 1 grupo
+  
+
+
+
 ## ## Populacao finita ####
 
 alpha <- 0.05 
@@ -159,8 +177,10 @@ Erro_des <- 10
 
 tab_ace_1 <- tab_invt %>% 
   group_by(TALHAO) %>% 
-  summarise(Nj = mean(AREA_TL,na.rm=T) / (mean(AREA_PC,na.rm=T)/10000) ) %>% 
-  summarise(N  = sum(Nj,na.rm=T) ) %>% 
+  summarise(
+   Nj=mean(AREA_TL,na.rm=T)/(mean(AREA_PC,na.rm=T)/10000)) %>% 
+  summarise(
+    N=sum(Nj,na.rm=T)) %>% 
   select(N) %>% 
   cbind(tab_invt,.) %>% 
   mutate(Nj = AREA_TL / (AREA_PC/10000) ) %>% 
